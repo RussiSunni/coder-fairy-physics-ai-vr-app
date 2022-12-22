@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using OpenAI_API;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +6,6 @@ using System.Globalization;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,55 +14,21 @@ public class OpenAITest : MonoBehaviour
     public Text questionText;
     public Text answerText;
     private void Start()
-    {
-        // var task = StartAsync();
-
-      //  var question = "What is your name?";
-
-        //call the open ai
-        //var answer = callOpenAI(250, question, "text-davinci-002", 0.7, 1, 0, 0);       
-
-        //print(answer);
-    }
-
-    //async Task StartAsync()
-    //{       
-    //    var keyPath = Path.Combine(Application.streamingAssetsPath, "apiKey.txt");
-    //    if (File.Exists(keyPath) == false)
-    //    {
-    //        Debug.Log("Api key missing: " + keyPath);
-    //    }
-
-    //    //Debug.Log("Load apiKey: " + keyPath);
-
-    //    // Debug.Log("Sent to OpenAI: 'To be, or not to be:'");
-
-    //    var apiKey = File.ReadAllText(keyPath);
-
-    //    try
-    //    {
-    //        var api = new OpenAI_API.OpenAIAPI(apiKey, Engine.Davinci);         
-    //        var result = await api.Completions.CreateCompletionAsync("One Two Three One Two", temperature: 0.1);            
-    //        Debug.Log("Result: " + result.ToString());
-    //    }
-    //    catch(System.Exception e)
-    //    {
-    //        Debug.LogError(e.Message);
-    //    }
-    //}    
+    {        
+    }    
 
     private static string callOpenAI(int tokens, string input, string engine, double temperature, int topP, int frequencyPenalty, int presencePenalty)
     {
+        // Get the API key.
         var keyPath = Path.Combine(Application.streamingAssetsPath, "apiKey.txt");
         if (File.Exists(keyPath) == false)
         {
             Debug.Log("Api key missing: " + keyPath);
         }
-
         var apiKey = File.ReadAllText(keyPath);
-
         var openAiKey = apiKey;
-        //var openAiKey = "API_KEY";
+
+        // Call the API.
         var apiCall = "https://api.openai.com/v1/engines/" + engine + "/completions";
         try
         {
@@ -95,17 +59,14 @@ public class OpenAITest : MonoBehaviour
         {
             Console.WriteLine(ex.Message);
         }
-
         return null;
-
     }
 
     public void AskQuestion()
     {
+        // Receive question.
         var answer = callOpenAI(250, questionText.text, "text-davinci-002", 0.7, 1, 0, 0);
-        Console.WriteLine(answer);
-
-        answerText.text = answer;
-        //print(answer);
+        // Print answer to screen.
+        answerText.text = answer;        
     }
 }
