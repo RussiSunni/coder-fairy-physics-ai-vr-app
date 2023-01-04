@@ -8,9 +8,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using UnityEngine;
 using UnityEngine.UI;
+using Facebook.WitAi.TTS.Utilities;
+using Facebook.WitAi.TTS.Samples;
 
 public class OpenAITest : MonoBehaviour
 {
+    [SerializeField] private TTSSpeakerInput _speaker;
     public Text questionText;
     public Text answerText;
     private void Start()
@@ -66,7 +69,11 @@ public class OpenAITest : MonoBehaviour
     {
         // Receive question.
         var answer = callOpenAI(250, questionText.text, "text-davinci-002", 0.7, 1, 0, 0);
+
         // Print answer to screen.
-        answerText.text = answer;
+        // answerText.text = answer;
+
+        // Speak Answer.
+        _speaker.SayPhrase(answer);
     }
 }

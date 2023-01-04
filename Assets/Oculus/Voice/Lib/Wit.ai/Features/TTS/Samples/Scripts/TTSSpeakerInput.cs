@@ -14,22 +14,12 @@ namespace Facebook.WitAi.TTS.Samples
 {
     public class TTSSpeakerInput : MonoBehaviour
     {
-        [SerializeField] private Text _title;
+       // [SerializeField] private Text _title;
         [SerializeField] private Text _answer;
-        [SerializeField] private TTSSpeaker _speaker;
-
-        // Preset text fields
-        private void Update()
-        {
-            if (!string.Equals(_title.text, _speaker.presetVoiceID))
-            {
-                _title.text = _speaker.presetVoiceID;
-                //_answer.placeholder.GetComponent<Text>().text = $"Write something to say in {_speaker.presetVoiceID}'s voice";
-            }
-        }
+        [SerializeField] private TTSSpeaker _speaker;    
 
         // Either say the current phrase or stop talking/loading
-        public void SayPhrase()
+        public void SayPhrase(string answer)
         {
             if (_speaker.IsLoading || _speaker.IsSpeaking)
             {
@@ -37,7 +27,7 @@ namespace Facebook.WitAi.TTS.Samples
             }
             else
             {
-                _speaker.Speak(_answer.text);
+                _speaker.Speak(answer);
             }
         }
     }
