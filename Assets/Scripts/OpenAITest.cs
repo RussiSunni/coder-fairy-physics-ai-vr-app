@@ -10,12 +10,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using Facebook.WitAi.TTS.Utilities;
 using Facebook.WitAi.TTS.Samples;
+using TMPro;
 
 public class OpenAITest : MonoBehaviour
 {
     [SerializeField] private TTSSpeakerInput _speaker;
-    public Text questionText;
-    public Text answerText;
+   // public Text questionText;
+    public TMP_Text questionText;
+    private Text answerText;
+
     private void Start()
     {
     }
