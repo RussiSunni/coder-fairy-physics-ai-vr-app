@@ -15,7 +15,7 @@ namespace Facebook.WitAi.TTS.Samples
     public class TTSSpeakerInput : MonoBehaviour
     {
        // [SerializeField] private Text _title;
-        [SerializeField] private Text _answer;
+      //  [SerializeField] private Text _answer;
         [SerializeField] private TTSSpeaker _speaker;    
 
         // Either say the current phrase or stop talking/loading
