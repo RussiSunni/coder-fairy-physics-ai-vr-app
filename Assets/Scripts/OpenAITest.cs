@@ -11,13 +11,15 @@ using UnityEngine.UI;
 using Facebook.WitAi.TTS.Utilities;
 using Facebook.WitAi.TTS.Samples;
 using TMPro;
+using Newtonsoft.Json.Linq;
 
 public class OpenAITest : MonoBehaviour
 {
     [SerializeField] private TTSSpeakerInput _speaker;
    // public Text questionText;
     public TMP_Text questionText;
-    private Text answerText;
+    public TMP_Text answerText;
+    public TMP_Text buttonTest;
 
     private void Start()
     {
@@ -32,7 +34,10 @@ public class OpenAITest : MonoBehaviour
             Debug.Log("Api key missing: " + keyPath);
         }
         var apiKey = File.ReadAllText(keyPath);
+
+        // for testing only.
         var openAiKey = apiKey;
+       
 
         // Call the API.
         var apiCall = "https://api.openai.com/v1/engines/" + engine + "/completions";
@@ -52,31 +57,68 @@ public class OpenAITest : MonoBehaviour
                     var response = httpClient.SendAsync(request).Result;
                     var json = response.Content.ReadAsStringAsync().Result;
 
-                    dynamic dynObj = JsonConvert.DeserializeObject(json);
+                    Debug.Log(json);
 
-                    if (dynObj != null)
-                    {
-                        return dynObj.choices[0].text.ToString();
-                    }
+                    Response responseObject = JsonUtility.FromJson<Response>(json);
+                  
+                    Debug.Log(responseObject.choices[0].text);
+
+                    return responseObject.choices[0].text;                
                 }
             }
         }
         catch (Exception ex)
         {
+            Debug.Log(ex.Message);
             Console.WriteLine(ex.Message);
         }
         return null;
     }
 
     public void AskQuestion()
-    {
+    {     
         // Receive question.
         var answer = callOpenAI(250, questionText.text, "text-davinci-002", 0.7, 1, 0, 0);
 
         // Print answer to screen.
-        // answerText.text = answer;
+        answerText.text = answer;
 
         // Speak Answer.
         _speaker.SayPhrase(answer);
     }
+
+
+    // In order to get the response object from the JSON. --------
+    [System.Serializable]
+    public class Response
+    {
+        public string id;
+        public string objectName;
+        public int created;
+        public string model;
+        public Choice[] choices;
+        public Usage usage;        
+    }
+
+    [System.Serializable]
+    public class Choice
+    {
+        public string text;
+        public int index;
+        public string logprobs;
+        public string finish_reason;          
+    }
+
+    [System.Serializable]
+    public class Usage
+    {
+        public int prompt_tokens;
+        public int completion_tokens;
+        public int total_tokens;
+    }
+
 }
+
+// attempting to call method "system.linq.expressions.interpreter.lightlambda"
+
+
