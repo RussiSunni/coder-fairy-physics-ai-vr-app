@@ -28,16 +28,16 @@ public class OpenAITest : MonoBehaviour
     private static string callOpenAI(int tokens, string input, string engine, double temperature, int topP, int frequencyPenalty, int presencePenalty)
     {
         // Get the API key.
-        var keyPath = Path.Combine(Application.streamingAssetsPath, "apiKey.txt");
-        if (File.Exists(keyPath) == false)
-        {
-            Debug.Log("Api key missing: " + keyPath);
-        }
-        var apiKey = File.ReadAllText(keyPath);
+        //var keyPath = Path.Combine(Application.streamingAssetsPath, "apiKey.txt");
+        //if (File.Exists(keyPath) == false)
+        //{
+        //    Debug.Log("Api key missing: " + keyPath);
+        //}
+        //var apiKey = File.ReadAllText(keyPath);        
+        //var openAiKey = apiKey;
 
-        // for testing only.
-        var openAiKey = apiKey;
-       
+        // Need to change.
+        var openAiKey = "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";
 
         // Call the API.
         var apiCall = "https://api.openai.com/v1/engines/" + engine + "/completions";
