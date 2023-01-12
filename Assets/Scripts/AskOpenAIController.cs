@@ -13,7 +13,7 @@ using Facebook.WitAi.TTS.Samples;
 using TMPro;
 using Newtonsoft.Json.Linq;
 
-public class OpenAITest : MonoBehaviour
+public class AskOpenAIController : MonoBehaviour
 {
     [SerializeField] private TTSSpeakerInput _speaker;
    // public Text questionText;
