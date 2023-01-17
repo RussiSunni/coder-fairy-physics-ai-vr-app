@@ -11,7 +11,8 @@ using UnityEngine.UI;
 using Facebook.WitAi.TTS.Utilities;
 using Facebook.WitAi.TTS.Samples;
 using TMPro;
-using Newtonsoft.Json.Linq;
+using UnityEngine.Networking;
+using System.Text;
 
 public class AskOpenAIController : MonoBehaviour
 {
@@ -22,12 +23,12 @@ public class AskOpenAIController : MonoBehaviour
     public TMP_Text buttonTest;
 
     private void Start()
-    {
-    }
-
-    private static string callOpenAI(int tokens, string input, string engine, double temperature, int topP, int frequencyPenalty, int presencePenalty)
+    { }   
+        
+    public IEnumerator CallOpenAI(string url, string questionText)
     {
         // Get the API key.
+        // Need to implement this still.
         //var keyPath = Path.Combine(Application.streamingAssetsPath, "apiKey.txt");
         //if (File.Exists(keyPath) == false)
         //{
@@ -36,59 +37,72 @@ public class AskOpenAIController : MonoBehaviour
         //var apiKey = File.ReadAllText(keyPath);        
         //var openAiKey = apiKey;
 
-        // Need to change.
-        var openAiKey = "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";
+        var request = new Request();
 
-        // Call the API.
-        var apiCall = "https://api.openai.com/v1/engines/" + engine + "/completions";
-        try
+        // Hard coded for now.
+        request.model = "text-davinci-003";       
+        request.prompt = questionText;
+        request.max_tokens = 10;
+        request.temperature = 0.7f;
+
+        // Below params not working yet.
+        //request.top_p = 1;
+        //request.n = 1;
+        //request.stream = false;
+        //request.logprobs = null; 
+
+        string json = JsonUtility.ToJson(request);
+
+        var req = new UnityWebRequest(url, "POST");
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+        req.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        req.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        req.SetRequestHeader("Content-Type", "application/json");
+        req.SetRequestHeader("Authorization", "Bearer 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");
+
+        //Send the request then wait here until it returns
+        yield return req.SendWebRequest();
+
+        if (req.isNetworkError)
         {
-            using (var httpClient = new HttpClient())
-            {
-                using (var request = new HttpRequestMessage(new HttpMethod("POST"), apiCall))
-                {
-                    request.Headers.TryAddWithoutValidation("Authorization", "Bearer " + openAiKey);
-                    request.Content = new StringContent("{\n  \"prompt\": \"" + input + "\",\n  \"temperature\": " +
-                                                        temperature.ToString(CultureInfo.InvariantCulture) + ",\n  \"max_tokens\": " + tokens + ",\n  \"top_p\": " + topP +
-                                                        ",\n  \"frequency_penalty\": " + frequencyPenalty + ",\n  \"presence_penalty\": " + presencePenalty + "\n}");
-
-                    request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-
-                    var response = httpClient.SendAsync(request).Result;
-                    var json = response.Content.ReadAsStringAsync().Result;
-
-                    Debug.Log(json);
-
-                    Response responseObject = JsonUtility.FromJson<Response>(json);
-                  
-                    Debug.Log(responseObject.choices[0].text);
-
-                    return responseObject.choices[0].text;                
-                }
-            }
+            Debug.Log("Error While Sending: " + req.error);
         }
-        catch (Exception ex)
+        else
         {
-            Debug.Log(ex.Message);
-            Console.WriteLine(ex.Message);
+            Debug.Log("Received: " + req.downloadHandler.text);         
+            Response responseObject = JsonUtility.FromJson<Response>(req.downloadHandler.text);
+
+            // Print answer to screen.
+            answerText.text = responseObject.choices[0].text;
+            // Speak Answer.
+            _speaker.SayPhrase(responseObject.choices[0].text);
         }
-        return null;
     }
 
     public void AskQuestion()
-    {     
-        // Receive question.
-        var answer = callOpenAI(250, questionText.text, "text-davinci-002", 0.7, 1, 0, 0);
-
-        // Print answer to screen.
-        answerText.text = answer;
-
-        // Speak Answer.
-        _speaker.SayPhrase(answer);
+    {
+        // Receive question.         
+        StartCoroutine(CallOpenAI("https://api.openai.com/v1/completions", questionText.text));
     }
 
+    // Creating a class to send the POST request to the OpenAI API.
+    [System.Serializable]
+    public class Request
+    {
+        public string model;
+        public string prompt;
+        public int max_tokens;
+        public float temperature;
+
+        // Below properties not working for the API call yet.
+        //public int top_p;
+        //public int n;
+        //public bool stream;
+        //public string logprobs;
+    }
 
     // In order to get the response object from the JSON. --------
+
     [System.Serializable]
     public class Response
     {
@@ -116,9 +130,4 @@ public class AskOpenAIController : MonoBehaviour
         public int completion_tokens;
         public int total_tokens;
     }
-
 }
-
-// attempting to call method "system.linq.expressions.interpreter.lightlambda"
-
-
