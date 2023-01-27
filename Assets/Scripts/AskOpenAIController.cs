@@ -26,7 +26,7 @@ public class AskOpenAIController : MonoBehaviour
     { }   
         
     public IEnumerator CallOpenAI(string url, string questionText)
-    {
+    {      
         // Get the API key.
         // Need to implement this still.
         //var keyPath = Path.Combine(Application.streamingAssetsPath, "apiKey.txt");
@@ -44,6 +44,8 @@ public class AskOpenAIController : MonoBehaviour
         request.prompt = questionText;
         request.max_tokens = 10;
         request.temperature = 0.7f;
+        request.n = 1;
+        request.stream = false;
 
         // Below params not working yet.
         //request.top_p = 1;
@@ -74,8 +76,10 @@ public class AskOpenAIController : MonoBehaviour
 
             // Print answer to screen.
             answerText.text = responseObject.choices[0].text;
+
             // Speak Answer.
             _speaker.SayPhrase(responseObject.choices[0].text);
+            //_speaker.SayPhrase("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
         }
     }
 
@@ -84,6 +88,7 @@ public class AskOpenAIController : MonoBehaviour
         // Receive question.         
         StartCoroutine(CallOpenAI("https://api.openai.com/v1/completions", questionText.text));
     }
+ 
 
     // Creating a class to send the POST request to the OpenAI API.
     [System.Serializable]
@@ -96,8 +101,8 @@ public class AskOpenAIController : MonoBehaviour
 
         // Below properties not working for the API call yet.
         //public int top_p;
-        //public int n;
-        //public bool stream;
+        public int n;
+        public bool stream;
         //public string logprobs;
     }
 
