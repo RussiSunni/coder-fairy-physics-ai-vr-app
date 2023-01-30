@@ -31,7 +31,11 @@ MonoBehaviour:
     message: 
     dictation: 
   entities: []
-  intents: []
+  intents:
+  - witConfiguration: {fileID: 11400000}
+    id: 848146276287233
+    name: talk_to_teacher
+    entities: []
   traits: []
   isDemoOnly: 0
   useConduit: 0
