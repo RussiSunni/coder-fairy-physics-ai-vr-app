@@ -14,6 +14,15 @@ public class TestDroidBehaviour : MonoBehaviour
     Rigidbody m_Rigidbody;
     private float force = 10f;
 
+    // To calculate distance travelled.
+    private Vector3 lastPosition;
+    private float totalDistance;
+    public TMP_Text distanceText;
+
+    // Mass.
+    public TMP_Text massText;
+    public float mass;
+
     void Start()
     {
         speedText.text = speed.ToString();
@@ -23,6 +32,14 @@ public class TestDroidBehaviour : MonoBehaviour
         });
 
         m_Rigidbody = GetComponent<Rigidbody>();
+
+        // To calculate distance travelled.
+        lastPosition = transform.position;
+
+        // To calculate mass.
+        mass = m_Rigidbody.mass;
+        massText.text = mass.ToString();
+
     }
 
     public void IncreaseSpeed()
@@ -38,6 +55,23 @@ public class TestDroidBehaviour : MonoBehaviour
             speed--;
             speedText.text = speed.ToString();
         }
+    }
+
+    public void DecreaseMass()
+    {
+        if (mass > 0)
+        {
+            mass--;
+            m_Rigidbody.mass = mass;
+            massText.text = mass.ToString();
+        }
+    }
+
+    public void IncreaseMass()
+    {
+        mass++;
+        m_Rigidbody.mass = mass;
+        massText.text = mass.ToString();
     }
 
     void LateUpdate()
@@ -79,6 +113,14 @@ public class TestDroidBehaviour : MonoBehaviour
             Vector3 velocity = transform.forward.normalized * speed * Time.deltaTime;
             transform.position = transform.position + velocity;
         }
+
+        // To calculate distance travelled.
+        float distance = Vector3.Distance(lastPosition, transform.position);
+        totalDistance += distance;
+        lastPosition = transform.position;
+        //Debug.Log("Total distance travelled:" + totalDistance);
+        distanceText.text = totalDistance.ToString();
+
     }
 
     void DirectionDropdownValueChanged(TMP_Dropdown change)
