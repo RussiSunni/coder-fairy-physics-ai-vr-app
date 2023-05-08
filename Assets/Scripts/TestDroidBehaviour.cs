@@ -8,7 +8,7 @@ public class TestDroidBehaviour : MonoBehaviour
     public TMP_Text speedText;
     public int speed = 0;
     public TMP_Dropdown directionDropdown;
-    private bool isSteadyMoving;
+    private bool isComeToPlayer;
     private Vector3 north;
 
     Rigidbody m_Rigidbody;
@@ -73,7 +73,7 @@ public class TestDroidBehaviour : MonoBehaviour
         if (mass >= 2f)
         {
             mass--;
-            m_Rigidbody.mass = mass;            
+            m_Rigidbody.mass = mass;
             massText.text = mass.ToString("#.##");
         }
         else if (mass > 0.1f)
@@ -107,42 +107,14 @@ public class TestDroidBehaviour : MonoBehaviour
 
     void LateUpdate()
     {
-        if (isSteadyMoving)
+        if (isComeToPlayer)
         {
-            // If droid set to 'Follow'.
-            if (directionDropdown.value == 0)
-            {
-                // Work out direction vector.
-                direction = goal.transform.position - transform.position;
-
-                // Face goal.
-                transform.LookAt(goal.transform.position);
-
-                if (direction.magnitude > 2)
-                {
-                    Vector3 ballVelocity = direction.normalized * speed * Time.deltaTime;
-                    transform.position = transform.position + ballVelocity;
-                }
-            }
-            else if (directionDropdown.value == 1)
-            {
-                transform.rotation = Quaternion.Euler(rotation, -Input.compass.magneticHeading, 0);
-            }
-            else if (directionDropdown.value == 2)
-            {
-                transform.rotation = Quaternion.Euler(rotation, -Input.compass.magneticHeading + 90, 0);
-            }
-            else if (directionDropdown.value == 3)
-            {
-                transform.rotation = Quaternion.Euler(rotation, -Input.compass.magneticHeading + 180, 0);
-            }
-            else if (directionDropdown.value == 4)
-            {
-                transform.rotation = Quaternion.Euler(rotation, -Input.compass.magneticHeading - 90, 0);
-            }
             // Move.
-            Vector3 velocity = transform.forward.normalized * speed * Time.deltaTime;
-            transform.position = transform.position + velocity;
+            if (direction.magnitude > 2)
+            {
+                Vector3 ballVelocity = direction.normalized * speed * Time.deltaTime;
+                transform.position = transform.position + ballVelocity;
+            }
         }
 
         // To calculate distance travelled.
@@ -151,42 +123,59 @@ public class TestDroidBehaviour : MonoBehaviour
         lastPosition = transform.position;
         //Debug.Log("Total distance travelled:" + totalDistance);
         distanceText.text = totalDistance.ToString("#.##");
-
     }
 
     public void Shoot()
     {
-        isSteadyMoving = false;
+        isComeToPlayer = false;
+        m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
+    }
 
-        if (directionDropdown.value == 1)
+    
+    public void Stop()
+    {
+        m_Rigidbody.velocity = Vector3.zero;
+        m_Rigidbody.angularVelocity = Vector3.zero;
+        isComeToPlayer = false;
+    }
+    
+    public void ChangeDirection()
+    {      
+        // Face player.
+        if (directionDropdown.value == 0)
         {
-            //transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading, 0);
-            m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
+            // Work out direction vector.
+            direction = goal.transform.position - transform.position;
+
+            // Face goal.
+            transform.LookAt(goal.transform.position);
+        }
+        else if (directionDropdown.value == 1)
+        {
+            transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading, 0);
         }
         else if (directionDropdown.value == 2)
         {
-           //transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading + 90, 0);
-            m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
+            transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading + 90, 0);
         }
         else if (directionDropdown.value == 3)
         {
-            //transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading + 180, 0);
-            m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
+            transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading + 180, 0);
         }
         else if (directionDropdown.value == 4)
         {
-            //transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading - 90, 0);
-            m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
+            transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading - 90, 0);
         }
-
     }
-
-    public void Steady()
+    public void ToPlayer()
     {
-        if (!isSteadyMoving)
-            isSteadyMoving = true;
-        else
-            isSteadyMoving = false;
+        // Work out direction vector.
+        direction = goal.transform.position - transform.position;
+
+        // Face goal.
+        transform.LookAt(goal.transform.position);
+
+        isComeToPlayer = true;
     }
     void OnCollisionEnter(Collision collision)
     {
