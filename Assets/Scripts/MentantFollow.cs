@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class MentantFollow: MonoBehaviour
 {
     NavMeshAgent agent;
     public GameObject target;
+    public Toggle onOffToggle;
 
     void Start()
     {
@@ -20,6 +22,9 @@ public class MentantFollow: MonoBehaviour
     
     void Update()
     {
-        Follow(target.transform.position);
+        if (onOffToggle.isOn)
+        {
+            Follow(target.transform.position);
+        }
     }
 }
