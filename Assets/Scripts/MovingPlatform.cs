@@ -8,12 +8,8 @@ public class MovingPlatform : MonoBehaviour
     private Transform position1, position2;
     private float _speed = 3.0f;
     private bool _switch = false;
-   
-    void Start()
-    {
-        
-    }
 
+    // Move the platform between the 2 points.
     void FixedUpdate()
     {
         if (_switch == false)
@@ -34,6 +30,23 @@ public class MovingPlatform : MonoBehaviour
         else if (transform.position == position2.position)
         {
             _switch = false;
+        }
+    }
+
+    // So that droid can land and stay on platform.
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player droid"))
+        {
+            other.transform.parent = this.transform;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player droid"))
+        {
+            other.transform.parent = null;
         }
     }
 }
