@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class DroidControllerCanvasManager : MonoBehaviour
 {
     public Toggle canvasToggle;
     public CanvasGroup droidControllerUICanvasGroup;
+    public TMP_Text moveCounter;
+    private int _moveCounter = 0;
 
     void Start()
     {
@@ -15,9 +18,7 @@ public class DroidControllerCanvasManager : MonoBehaviour
     }
 
      void CanvasToggleValueChanged (Toggle canvasToggle)
-    {
-        Debug.Log("test");
-
+    {       
         if (canvasToggle.isOn)
         {
             droidControllerUICanvasGroup.alpha = 1;
@@ -28,5 +29,11 @@ public class DroidControllerCanvasManager : MonoBehaviour
             droidControllerUICanvasGroup.alpha = 0;
             droidControllerUICanvasGroup.interactable = false;
         }
+    }
+
+    public void CountMoves()
+    {
+        _moveCounter++;
+        moveCounter.text = _moveCounter.ToString();
     }
 }
