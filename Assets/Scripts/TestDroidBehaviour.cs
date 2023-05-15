@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class TestDroidBehaviour : MonoBehaviour
@@ -23,6 +24,15 @@ public class TestDroidBehaviour : MonoBehaviour
     public TMP_Text massText;
     public float mass;
 
+    // Volume.
+    SphereCollider sphereCollider;
+    public TMP_Text volumeText;
+    private float volume;
+
+    // Density.
+    public TMP_Text densityText;
+    public float density;    
+
     // Rotation.
     private float rotation = 0;
     public TMP_Text rotationText;
@@ -33,16 +43,26 @@ public class TestDroidBehaviour : MonoBehaviour
 
     void Start()
     {
-        speedText.text = speed.ToString();
-
-        m_Rigidbody = GetComponent<Rigidbody>();
-
+        speedText.text = speed.ToString();  
+           
         // To calculate distance travelled.
-        lastPosition = transform.position;
+        lastPosition = transform.position;        
+
+        // Volume.
+        // Get radius.
+        m_Rigidbody = GetComponent<Rigidbody>();
+        sphereCollider = GetComponent<SphereCollider>();
+        // Work out volume.
+        volume = (float)(4.0 / 3 * Math.PI * sphereCollider.radius * sphereCollider.radius * sphereCollider.radius);
+        volumeText.text = volume.ToString("#.##");
 
         // To calculate mass.
         mass = m_Rigidbody.mass;
         massText.text = mass.ToString();
+
+        // Density.
+        density = mass / volume;
+        densityText.text = density.ToString("#.##");
 
         // Rotation.
         rotationText.text = rotation.ToString();
@@ -51,8 +71,7 @@ public class TestDroidBehaviour : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-
-
+    // Speed.
     public void IncreaseSpeed()
     {
         speed++;
@@ -68,29 +87,65 @@ public class TestDroidBehaviour : MonoBehaviour
         }
     }
 
+    // Mass.
     public void DecreaseMass()
     {
+        // Mass.
         if (mass >= 2f)
-        {
+        {         
             mass--;
             m_Rigidbody.mass = mass;
-            massText.text = mass.ToString("#.##");
+            massText.text = mass.ToString("#.##");            
         }
         else if (mass > 0.1f)
-        {
+        {            
             mass = mass - 0.1f;
             m_Rigidbody.mass = mass;
-            massText.text = mass.ToString("#.##");
+            massText.text = mass.ToString("#.##");            
         }
+
+        // Density.
+        density = mass / volume;
+        densityText.text = density.ToString("#.##");
     }
 
     public void IncreaseMass()
     {
+        // Mass.
         mass++;
         m_Rigidbody.mass = mass;
         massText.text = mass.ToString();
+
+        // Density.
+        density = mass / volume;
+        densityText.text = density.ToString("#.##");
     }
 
+    // Volume.
+    public void IncreaseVolume()
+    {
+        gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x + 0.1f,
+            gameObject.transform.localScale.y + 0.1f,
+            gameObject.transform.localScale.z + 0.1f);
+
+        volume = (float)(4.0 / 3 * Math.PI * sphereCollider.radius * sphereCollider.radius * sphereCollider.radius);
+        volumeText.text = volume.ToString("#.##");
+    }
+
+    public void DecreaseVolume()
+    {
+        if (sphereCollider.radius > 0.1f)
+        {
+            gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x - 0.1f,
+             gameObject.transform.localScale.y - 0.1f,
+             gameObject.transform.localScale.z - 0.1f);
+
+            volume = (float)(4.0 / 3 * Math.PI * sphereCollider.radius * sphereCollider.radius * sphereCollider.radius);
+            volumeText.text = volume.ToString("#.##");
+        }
+    }
+
+    // Movement Controls.
     public void DecreaseRotation()
     {
         rotation--;
@@ -131,7 +186,6 @@ public class TestDroidBehaviour : MonoBehaviour
         m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
     }
 
-    
     public void Stop()
     {
         m_Rigidbody.velocity = Vector3.zero;
@@ -167,6 +221,7 @@ public class TestDroidBehaviour : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading - 90, 0);
         }
     }
+    
     public void ToPlayer()
     {
         // Work out direction vector.
