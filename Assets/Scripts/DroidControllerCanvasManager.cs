@@ -8,7 +8,7 @@ public class DroidControllerCanvasManager : MonoBehaviour
     public Toggle canvasToggle;
     public CanvasGroup droidControllerUICanvasGroup;
     public TMP_Text moveCounter;
-    private int _moveCounter = 0;
+    private int _moveCounter = 0;    
 
     void Start()
     {

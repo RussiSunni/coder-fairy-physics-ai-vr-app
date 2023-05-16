@@ -128,21 +128,32 @@ public class TestDroidBehaviour : MonoBehaviour
             gameObject.transform.localScale.y + 0.1f,
             gameObject.transform.localScale.z + 0.1f);
 
-        volume = (float)(4.0 / 3 * Math.PI * sphereCollider.radius * sphereCollider.radius * sphereCollider.radius);
+        volume = (float)(4.0 / 3 * Math.PI * ((gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2)));
         volumeText.text = volume.ToString("#.##");
+
+        CalculateDensity();
     }
 
     public void DecreaseVolume()
     {
-        if (sphereCollider.radius > 0.1f)
+        if (gameObject.transform.localScale.x > 0.1f)
         {
             gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x - 0.1f,
              gameObject.transform.localScale.y - 0.1f,
              gameObject.transform.localScale.z - 0.1f);
 
-            volume = (float)(4.0 / 3 * Math.PI * sphereCollider.radius * sphereCollider.radius * sphereCollider.radius);
+            volume = (float)(4.0 / 3 * Math.PI * ((gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2)));
             volumeText.text = volume.ToString("#.##");
+
+            CalculateDensity();
         }
+    }
+
+    // Work out density.
+    public void CalculateDensity()
+    {
+        density = mass / volume;
+        densityText.text = density.ToString("#.##");
     }
 
     // Movement Controls.
