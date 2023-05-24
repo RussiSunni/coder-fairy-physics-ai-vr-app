@@ -1,6 +1,9 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.XR;
+using System.Collections.Generic;
+using System.Collections;
 
 public class TestDroidBehaviour : MonoBehaviour
 {
@@ -8,7 +11,7 @@ public class TestDroidBehaviour : MonoBehaviour
     Vector3 direction;
     public TMP_Text speedText;
     public int speed = 0;
-    public TMP_Dropdown directionDropdown;
+    //public TMP_Dropdown directionDropdown;
     private bool isComeToPlayer;
     private Vector3 north;
 
@@ -36,10 +39,20 @@ public class TestDroidBehaviour : MonoBehaviour
     // Rotation.
     private float rotation = 0;
     public TMP_Text rotationText;
+    private bool primaryButtonValue;
+    private bool secondaryButtonValue;
 
     // Sound with collision.
     AudioSource audioSource;
 
+    // Shoot.
+    bool triggerValue;
+
+    // Stop.
+    bool gripValue;
+
+    // Rotation.
+    bool isButtonPressed = false;
 
     void Start()
     {
@@ -155,21 +168,7 @@ public class TestDroidBehaviour : MonoBehaviour
         density = mass / volume;
         densityText.text = density.ToString("#.##");
     }
-
-    // Movement Controls.
-    public void DecreaseRotation()
-    {
-        rotation--;
-        transform.Rotate(rotation, 0.0f, 0, Space.Self);
-        rotationText.text = rotation.ToString();
-    }
-
-    public void IncreaseRotation()
-    {
-        rotation++;
-        transform.Rotate(rotation, 0.0f, 0, Space.Self);
-        rotationText.text = rotation.ToString();
-    }
+      
 
     void LateUpdate()
     {
@@ -183,6 +182,39 @@ public class TestDroidBehaviour : MonoBehaviour
             }
         }
 
+       
+        var rightHandedControllers = new List<UnityEngine.XR.InputDevice>();
+        var desiredCharacteristics = UnityEngine.XR.InputDeviceCharacteristics.HeldInHand | UnityEngine.XR.InputDeviceCharacteristics.Right | UnityEngine.XR.InputDeviceCharacteristics.Controller;
+        UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(desiredCharacteristics, rightHandedControllers);
+        foreach (var device in rightHandedControllers)
+        {
+            // Shoot (droid shoots forward).
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out triggerValue) && triggerValue)
+            {
+                isComeToPlayer = false;
+                m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
+            }
+            // Stop.
+            else if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out gripValue) && gripValue)
+            {
+                m_Rigidbody.velocity = Vector3.zero;
+                m_Rigidbody.angularVelocity = Vector3.zero;
+                isComeToPlayer = false;
+            }
+            // Rotation.
+            else if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out primaryButtonValue) && primaryButtonValue)
+            {
+                if (isButtonPressed == false)
+                    StartCoroutine(ButtonPressedCoroutine("up"));
+              
+            }
+            else if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out secondaryButtonValue) && secondaryButtonValue)
+            {
+                if (isButtonPressed == false)
+                    StartCoroutine(ButtonPressedCoroutine("down"));
+            }
+        }
+
         // To calculate distance travelled.
         float distance = Vector3.Distance(lastPosition, transform.position);
         totalDistance += distance;
@@ -191,48 +223,25 @@ public class TestDroidBehaviour : MonoBehaviour
         distanceText.text = totalDistance.ToString("#.##");
     }
 
-    public void Shoot()
+    IEnumerator ButtonPressedCoroutine(string direction)
     {
-        isComeToPlayer = false;
-        m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
+        isButtonPressed = true;
+
+        if (direction == "up")
+            rotation++;
+        else
+            rotation--;
+
+        transform.Rotate(rotation, 0.0f, 0, Space.Self);
+        rotationText.text = rotation.ToString();
+
+        yield return new WaitForSeconds(.1f);
+
+        isButtonPressed = false;
     }
 
-    public void Stop()
-    {
-        m_Rigidbody.velocity = Vector3.zero;
-        m_Rigidbody.angularVelocity = Vector3.zero;
-        isComeToPlayer = false;
-    }
-    
-    public void ChangeDirection()
-    {      
-        // Face player.
-        if (directionDropdown.value == 0)
-        {
-            // Work out direction vector.
-            direction = goal.transform.position - transform.position;
 
-            // Face goal.
-            transform.LookAt(goal.transform.position);
-        }
-        else if (directionDropdown.value == 1)
-        {
-            transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading, 0);
-        }
-        else if (directionDropdown.value == 2)
-        {
-            transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading + 90, 0);
-        }
-        else if (directionDropdown.value == 3)
-        {
-            transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading + 180, 0);
-        }
-        else if (directionDropdown.value == 4)
-        {
-            transform.rotation = Quaternion.Euler(0, -Input.compass.magneticHeading - 90, 0);
-        }
-    }
-    
+
     public void ToPlayer()
     {
         // Work out direction vector.
