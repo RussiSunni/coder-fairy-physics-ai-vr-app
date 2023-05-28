@@ -10,13 +10,10 @@ public class TestDroidBehaviour : MonoBehaviour
     public GameObject goal;
     Vector3 direction;
     public TMP_Text speedText;
-    public int speed = 0;
-    //public TMP_Dropdown directionDropdown;
-    private bool isComeToPlayer;
-    private Vector3 north;
+    public int speed = 0;    
+    private bool isComeToPlayer;    
 
-    Rigidbody m_Rigidbody;
-    private float force = 10f;
+    Rigidbody m_Rigidbody;    
 
     // To calculate distance travelled.
     private Vector3 lastPosition;
@@ -181,7 +178,6 @@ public class TestDroidBehaviour : MonoBehaviour
                 transform.position = transform.position + ballVelocity;
             }
         }
-
        
         var rightHandedControllers = new List<UnityEngine.XR.InputDevice>();
         var desiredCharacteristics = UnityEngine.XR.InputDeviceCharacteristics.HeldInHand | UnityEngine.XR.InputDeviceCharacteristics.Right | UnityEngine.XR.InputDeviceCharacteristics.Controller;

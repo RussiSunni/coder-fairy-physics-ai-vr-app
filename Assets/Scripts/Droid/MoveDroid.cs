@@ -11,6 +11,12 @@ public class MoveDroid : MonoBehaviour
     Vector3 moveDirection;
     public TMP_Text speedText;
     public Camera mainCamera;
+    Rigidbody m_Rigidbody;
+
+    private void Start()
+    {
+        m_Rigidbody = GetComponent<Rigidbody>();
+    }
 
     void Update()
     {
@@ -21,10 +27,13 @@ public class MoveDroid : MonoBehaviour
         UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(desiredCharacteristics, rightHandedControllers);
 
         foreach (var device in rightHandedControllers)
-        {    
-              
+        {                  
             if (device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 primary2DAxisValue) && primary2DAxisValue != Vector2.zero)
             {
+                // First stop any other movement, like from a previous "shoot".
+                m_Rigidbody.velocity = Vector3.zero;
+                m_Rigidbody.angularVelocity = Vector3.zero;              
+
                 float X = primary2DAxisValue.x;
                 float Y = primary2DAxisValue.y;
 
