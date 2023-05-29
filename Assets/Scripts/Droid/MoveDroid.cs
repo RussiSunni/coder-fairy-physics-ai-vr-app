@@ -7,15 +7,17 @@ using System;
 
 public class MoveDroid : MonoBehaviour
 {    
-    bool triggerValue;
     Vector3 moveDirection;
-    public TMP_Text speedText;
     public Camera mainCamera;
     Rigidbody m_Rigidbody;
-
+    public TMP_Text speedText;
+    
     private void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+
+        // Get gameobjects for droid prefab.
+        speedText = GameObject.Find("Speed text").GetComponent<TextMeshProUGUI>();
     }
 
     void Update()

@@ -5,15 +5,17 @@ using UnityEngine.XR;
 using System.Collections.Generic;
 using System.Collections;
 
-public class TestDroidBehaviour : MonoBehaviour
+public class TestDroidBehaviour : MonoBehaviour 
 {
     public GameObject goal;
-    Vector3 direction;
     public TMP_Text speedText;
-    public int speed = 0;    
-    private bool isComeToPlayer;    
+    public int speed = 0;        
 
-    Rigidbody m_Rigidbody;    
+    Rigidbody m_Rigidbody;
+
+    // Turns.
+    public TMP_Text turnCounterText;
+    private int turnCounter = 0;
 
     // To calculate distance travelled.
     private Vector3 lastPosition;
@@ -34,15 +36,15 @@ public class TestDroidBehaviour : MonoBehaviour
     public float density;    
 
     // Rotation.
-    private float rotation = 0;
-    public TMP_Text rotationText;
+    private float rotation = 0;    
     private bool primaryButtonValue;
     private bool secondaryButtonValue;
 
     // Sound with collision.
-    AudioSource audioSource;
+    public AudioSource audioSource;
 
     // Shoot.
+    bool isRightTriggerPressed;
     bool triggerValue;
 
     // Stop.
@@ -53,6 +55,14 @@ public class TestDroidBehaviour : MonoBehaviour
 
     void Start()
     {
+        // Get gameobjects for droid prefab.
+        turnCounterText = GameObject.Find("Move counter text").GetComponent<TextMeshProUGUI>();
+        speedText = GameObject.Find("Speed text").GetComponent<TextMeshProUGUI>();
+        distanceText = GameObject.Find("Distance text").GetComponent<TextMeshProUGUI>();
+        massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
+        volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
+        densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();        
+
         speedText.text = speed.ToString();  
            
         // To calculate distance travelled.
@@ -72,10 +82,7 @@ public class TestDroidBehaviour : MonoBehaviour
 
         // Density.
         density = mass / volume;
-        densityText.text = density.ToString("#.##");
-
-        // Rotation.
-        rotationText.text = rotation.ToString();
+        densityText.text = density.ToString("#.##");       
 
         // Sound.
         audioSource = GetComponent<AudioSource>();
@@ -169,16 +176,7 @@ public class TestDroidBehaviour : MonoBehaviour
 
     void LateUpdate()
     {
-        if (isComeToPlayer)
-        {
-            // Move.
-            if (direction.magnitude > 2)
-            {
-                Vector3 ballVelocity = direction.normalized * speed * Time.deltaTime;
-                transform.position = transform.position + ballVelocity;
-            }
-        }
-       
+        // Movement controls. 
         var rightHandedControllers = new List<UnityEngine.XR.InputDevice>();
         var desiredCharacteristics = UnityEngine.XR.InputDeviceCharacteristics.HeldInHand | UnityEngine.XR.InputDeviceCharacteristics.Right | UnityEngine.XR.InputDeviceCharacteristics.Controller;
         UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(desiredCharacteristics, rightHandedControllers);
@@ -187,22 +185,20 @@ public class TestDroidBehaviour : MonoBehaviour
             // Shoot (droid shoots forward).
             if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out triggerValue) && triggerValue)
             {
-                isComeToPlayer = false;
-                m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
+                if (isRightTriggerPressed == false)
+                    StartCoroutine(RightTriggerPressedCoroutine());                
             }
             // Stop.
             else if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out gripValue) && gripValue)
             {
                 m_Rigidbody.velocity = Vector3.zero;
-                m_Rigidbody.angularVelocity = Vector3.zero;
-                isComeToPlayer = false;
+                m_Rigidbody.angularVelocity = Vector3.zero;                
             }
             // Rotation.
             else if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out primaryButtonValue) && primaryButtonValue)
             {
                 if (isButtonPressed == false)
-                    StartCoroutine(ButtonPressedCoroutine("up"));
-              
+                    StartCoroutine(ButtonPressedCoroutine("up"));              
             }
             else if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out secondaryButtonValue) && secondaryButtonValue)
             {
@@ -219,6 +215,16 @@ public class TestDroidBehaviour : MonoBehaviour
         distanceText.text = totalDistance.ToString("#.##");
     }
 
+    IEnumerator RightTriggerPressedCoroutine()
+    {
+        isRightTriggerPressed = true;
+        m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
+        turnCounter++;
+        turnCounterText.text = turnCounter.ToString();
+        yield return new WaitForSeconds(.5f);
+        isRightTriggerPressed = false;
+    }
+
     IEnumerator ButtonPressedCoroutine(string direction)
     {
         isButtonPressed = true;
@@ -228,26 +234,14 @@ public class TestDroidBehaviour : MonoBehaviour
         else
             rotation--;
 
-        transform.Rotate(rotation, 0.0f, 0, Space.Self);
-        rotationText.text = rotation.ToString();
+        transform.Rotate(rotation, 0.0f, 0, Space.Self);        
 
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(.5f);
 
         isButtonPressed = false;
     }
 
-
-
-    public void ToPlayer()
-    {
-        // Work out direction vector.
-        direction = goal.transform.position - transform.position;
-
-        // Face goal.
-        transform.LookAt(goal.transform.position);
-
-        isComeToPlayer = true;
-    }
+    // Play sound on collision.
     void OnCollisionEnter(Collision collision)
     {
         foreach (ContactPoint contact in collision.contacts)
