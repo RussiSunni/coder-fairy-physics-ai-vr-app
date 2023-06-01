@@ -11,7 +11,7 @@ public class DroidControllerCanvasManager : MonoBehaviour
     public Toggle canvasToggle;
     public CanvasGroup droidControllerUICanvasGroup;
 
-    // 
+    // Find the game object to fire methods.
     public GameObject droid;
 
     void Start()
@@ -21,6 +21,7 @@ public class DroidControllerCanvasManager : MonoBehaviour
             CanvasToggleValueChanged(canvasToggle);
         });
 
+        // Find the game object to fire methods.
         droid = GameObject.Find("Droid Ball");      
     }
 
@@ -39,6 +40,7 @@ public class DroidControllerCanvasManager : MonoBehaviour
     }
 
 
+    // Controls are firing methods on the "TestDroidBehaviour" script, as are prefabs.
     public void IncreaseSpeed()
     {
         droid.GetComponent<TestDroidBehaviour>().IncreaseSpeed();
