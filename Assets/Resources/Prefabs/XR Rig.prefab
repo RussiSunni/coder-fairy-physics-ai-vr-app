@@ -258,8 +258,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TestDroidBehaviour, Assembly-CSharp
+      - m_Target: {fileID: 1376743425267006834}
+        m_TargetAssemblyTypeName: DroidControllerCanvasManager, Assembly-CSharp
         m_MethodName: IncreaseVolume
         m_Mode: 1
         m_Arguments:
@@ -877,8 +877,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Move, Assembly-CSharp
+      - m_Target: {fileID: 1376743425267006834}
+        m_TargetAssemblyTypeName: DroidControllerCanvasManager, Assembly-CSharp
         m_MethodName: DecreaseSpeed
         m_Mode: 1
         m_Arguments:
@@ -1087,8 +1087,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TestDroidBehaviour, Assembly-CSharp
+      - m_Target: {fileID: 1376743425267006834}
+        m_TargetAssemblyTypeName: DroidControllerCanvasManager, Assembly-CSharp
         m_MethodName: DecreaseMass
         m_Mode: 1
         m_Arguments:
@@ -1251,7 +1251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.98039216}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.29803923}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1441,8 +1441,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Move, Assembly-CSharp
+      - m_Target: {fileID: 1376743425267006834}
+        m_TargetAssemblyTypeName: DroidControllerCanvasManager, Assembly-CSharp
         m_MethodName: IncreaseSpeed
         m_Mode: 1
         m_Arguments:
@@ -3573,6 +3573,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasToggle: {fileID: 1376743424153043651}
   droidControllerUICanvasGroup: {fileID: 1376743424187946413}
+  droid: {fileID: 3364956469296236296, guid: ca00237f1d933f846b444f65996e9fda, type: 3}
 --- !u!1 &1376743425288974121
 GameObject:
   m_ObjectHideFlags: 0
@@ -4684,8 +4685,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TestDroidBehaviour, Assembly-CSharp
+      - m_Target: {fileID: 1376743425267006834}
+        m_TargetAssemblyTypeName: DroidControllerCanvasManager, Assembly-CSharp
         m_MethodName: DecreaseVolume
         m_Mode: 1
         m_Arguments:
@@ -5705,8 +5706,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TestDroidBehaviour, Assembly-CSharp
+      - m_Target: {fileID: 1376743425267006834}
+        m_TargetAssemblyTypeName: DroidControllerCanvasManager, Assembly-CSharp
         m_MethodName: IncreaseMass
         m_Mode: 1
         m_Arguments:

@@ -17,6 +17,7 @@ public class MoveDroid : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
 
         // Get gameobjects for droid prefab.
+        mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();        
         speedText = GameObject.Find("Speed text").GetComponent<TextMeshProUGUI>();
     }
 

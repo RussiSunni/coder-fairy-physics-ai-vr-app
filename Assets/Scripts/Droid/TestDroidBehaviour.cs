@@ -8,10 +8,10 @@ using System.Collections;
 public class TestDroidBehaviour : MonoBehaviour 
 {
     public GameObject goal;
+   
+    public int speed;
     public TMP_Text speedText;
-    public int speed = 0;        
-
-    Rigidbody m_Rigidbody;
+    public Rigidbody m_Rigidbody;
 
     // Turns.
     public TMP_Text turnCounterText;
@@ -29,11 +29,11 @@ public class TestDroidBehaviour : MonoBehaviour
     // Volume.
     SphereCollider sphereCollider;
     public TMP_Text volumeText;
-    private float volume;
+    public float volume;
 
     // Density.
     public TMP_Text densityText;
-    public float density;    
+    public float density = 0;    
 
     // Rotation.
     private float rotation = 0;    
@@ -61,10 +61,8 @@ public class TestDroidBehaviour : MonoBehaviour
         distanceText = GameObject.Find("Distance text").GetComponent<TextMeshProUGUI>();
         massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
         volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
-        densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();        
+        densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();
 
-        speedText.text = speed.ToString();  
-           
         // To calculate distance travelled.
         lastPosition = transform.position;        
 
@@ -86,12 +84,14 @@ public class TestDroidBehaviour : MonoBehaviour
 
         // Sound.
         audioSource = GetComponent<AudioSource>();
+
+        speed = 0;
     }
 
     // Speed.
     public void IncreaseSpeed()
     {
-        speed++;
+        speed++;       
         speedText.text = speed.ToString();
     }
 
@@ -99,30 +99,30 @@ public class TestDroidBehaviour : MonoBehaviour
     {
         if (speed > 0)
         {
-            speed--;
+            speed--;         
             speedText.text = speed.ToString();
         }
     }
 
-    // Mass.
+    //// Mass.
     public void DecreaseMass()
     {
         // Mass.
         if (mass >= 2f)
-        {         
+        {
             mass--;
-            m_Rigidbody.mass = mass;
-            massText.text = mass.ToString("#.##");            
+            m_Rigidbody.mass = mass;            
+            massText.text = mass.ToString("#.##");
         }
         else if (mass > 0.1f)
-        {            
+        {
             mass = mass - 0.1f;
-            m_Rigidbody.mass = mass;
-            massText.text = mass.ToString("#.##");            
+            m_Rigidbody.mass = mass;            
+            massText.text = mass.ToString("#.##");
         }
 
         // Density.
-        density = mass / volume;
+        density = mass / volume;        
         densityText.text = density.ToString("#.##");
     }
 
@@ -130,11 +130,11 @@ public class TestDroidBehaviour : MonoBehaviour
     {
         // Mass.
         mass++;
-        m_Rigidbody.mass = mass;
+        m_Rigidbody.mass = mass;        
         massText.text = mass.ToString();
 
         // Density.
-        density = mass / volume;
+        density = mass / volume;        
         densityText.text = density.ToString("#.##");
     }
 
@@ -145,7 +145,7 @@ public class TestDroidBehaviour : MonoBehaviour
             gameObject.transform.localScale.y + 0.1f,
             gameObject.transform.localScale.z + 0.1f);
 
-        volume = (float)(4.0 / 3 * Math.PI * ((gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2)));
+        volume = (float)(4.0 / 3 * Math.PI * ((gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2)));        
         volumeText.text = volume.ToString("#.##");
 
         CalculateDensity();
@@ -159,7 +159,7 @@ public class TestDroidBehaviour : MonoBehaviour
              gameObject.transform.localScale.y - 0.1f,
              gameObject.transform.localScale.z - 0.1f);
 
-            volume = (float)(4.0 / 3 * Math.PI * ((gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2)));
+            volume = (float)(4.0 / 3 * Math.PI * ((gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2)));            
             volumeText.text = volume.ToString("#.##");
 
             CalculateDensity();
@@ -169,13 +169,20 @@ public class TestDroidBehaviour : MonoBehaviour
     // Work out density.
     public void CalculateDensity()
     {
-        density = mass / volume;
+        density = mass / volume;        
         densityText.text = density.ToString("#.##");
     }
       
 
     void LateUpdate()
     {
+        // For testing.
+        //if (Input.GetKeyDown("space"))
+        //{
+        //    if (isRightTriggerPressed == false)
+        //        StartCoroutine(RightTriggerPressedCoroutine());
+        //}
+
         // Movement controls. 
         var rightHandedControllers = new List<UnityEngine.XR.InputDevice>();
         var desiredCharacteristics = UnityEngine.XR.InputDeviceCharacteristics.HeldInHand | UnityEngine.XR.InputDeviceCharacteristics.Right | UnityEngine.XR.InputDeviceCharacteristics.Controller;
@@ -187,7 +194,7 @@ public class TestDroidBehaviour : MonoBehaviour
             {
                 if (isRightTriggerPressed == false)
                     StartCoroutine(RightTriggerPressedCoroutine());                
-            }
+            }        
             // Stop.
             else if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out gripValue) && gripValue)
             {
@@ -210,15 +217,15 @@ public class TestDroidBehaviour : MonoBehaviour
         // To calculate distance travelled.
         float distance = Vector3.Distance(lastPosition, transform.position);
         totalDistance += distance;
-        lastPosition = transform.position;
-        //Debug.Log("Total distance travelled:" + totalDistance);
+        lastPosition = transform.position;        
         distanceText.text = totalDistance.ToString("#.##");
     }
 
     IEnumerator RightTriggerPressedCoroutine()
     {
         isRightTriggerPressed = true;
-        m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
+        // m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
+        m_Rigidbody.AddForce(transform.forward * speed * 10, ForceMode.Impulse);
         turnCounter++;
         turnCounterText.text = turnCounter.ToString();
         yield return new WaitForSeconds(.5f);

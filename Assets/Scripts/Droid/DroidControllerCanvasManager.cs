@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+
 public class DroidControllerCanvasManager : MonoBehaviour
 {
     // Show / Hide UI.
     public Toggle canvasToggle;
-    public CanvasGroup droidControllerUICanvasGroup;  
+    public CanvasGroup droidControllerUICanvasGroup;
+
+    // 
+    public GameObject droid;
 
     void Start()
     {
@@ -15,6 +20,8 @@ public class DroidControllerCanvasManager : MonoBehaviour
         {
             CanvasToggleValueChanged(canvasToggle);
         });
+
+        droid = GameObject.Find("Droid Ball");      
     }
 
     void CanvasToggleValueChanged(Toggle canvasToggle)
@@ -29,5 +36,38 @@ public class DroidControllerCanvasManager : MonoBehaviour
             droidControllerUICanvasGroup.alpha = 0;
             droidControllerUICanvasGroup.interactable = false;
         }
-    }   
+    }
+
+
+    public void IncreaseSpeed()
+    {
+        droid.GetComponent<TestDroidBehaviour>().IncreaseSpeed();
+    }
+
+    public void DecreaseSpeed()
+    {
+        droid.GetComponent<TestDroidBehaviour>().DecreaseSpeed();
+    }
+
+    // Mass.
+    public void DecreaseMass()
+    {
+        droid.GetComponent<TestDroidBehaviour>().DecreaseMass();      
+    }
+
+    public void IncreaseMass()
+    {
+        droid.GetComponent<TestDroidBehaviour>().IncreaseMass();       
+    }
+
+    // Volume.
+    public void IncreaseVolume()
+    {
+        droid.GetComponent<TestDroidBehaviour>().IncreaseVolume();
+    }
+
+    public void DecreaseVolume()
+    {
+        droid.GetComponent<TestDroidBehaviour>().DecreaseVolume();
+    }
 }
