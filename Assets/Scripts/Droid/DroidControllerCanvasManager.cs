@@ -41,6 +41,7 @@ public class DroidControllerCanvasManager : MonoBehaviour
 
 
     // Controls are firing methods on the "TestDroidBehaviour" script, as are prefabs.
+    // Speed.
     public void IncreaseSpeed()
     {
         droid.GetComponent<TestDroidBehaviour>().IncreaseSpeed();
@@ -49,6 +50,17 @@ public class DroidControllerCanvasManager : MonoBehaviour
     public void DecreaseSpeed()
     {
         droid.GetComponent<TestDroidBehaviour>().DecreaseSpeed();
+    }
+
+    // Force.
+    public void IncreaseForce()
+    {
+        droid.GetComponent<TestDroidBehaviour>().IncreaseForce();
+    }
+
+    public void DecreaseForce()
+    {
+        droid.GetComponent<TestDroidBehaviour>().DecreaseForce();
     }
 
     // Mass.

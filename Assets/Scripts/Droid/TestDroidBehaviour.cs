@@ -9,9 +9,16 @@ public class TestDroidBehaviour : MonoBehaviour
 {
     public GameObject goal;
    
+   
+    public Rigidbody m_Rigidbody;
+
+    // Speed.
     public int speed;
     public TMP_Text speedText;
-    public Rigidbody m_Rigidbody;
+
+    // Force.
+    public int force;
+    public TMP_Text forceText;
 
     // Turns.
     public TMP_Text turnCounterText;
@@ -58,6 +65,7 @@ public class TestDroidBehaviour : MonoBehaviour
         // Get gameobjects for droid prefab.
         turnCounterText = GameObject.Find("Move counter text").GetComponent<TextMeshProUGUI>();
         speedText = GameObject.Find("Speed text").GetComponent<TextMeshProUGUI>();
+        forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
         distanceText = GameObject.Find("Distance text").GetComponent<TextMeshProUGUI>();
         massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
         volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
@@ -91,7 +99,9 @@ public class TestDroidBehaviour : MonoBehaviour
     // Speed.
     public void IncreaseSpeed()
     {
-        speed++;       
+        speed++;
+
+        speedText = GameObject.Find("Speed text").GetComponent<TextMeshProUGUI>();
         speedText.text = speed.ToString();
     }
 
@@ -99,9 +109,31 @@ public class TestDroidBehaviour : MonoBehaviour
     {
         if (speed > 0)
         {
-            speed--;         
+            speed--;
+
+            speedText = GameObject.Find("Speed text").GetComponent<TextMeshProUGUI>();
             speedText.text = speed.ToString();
         }
+    }
+
+    // Force
+    public void DecreaseForce()
+    {
+        if (force > 0)
+        {
+            force--;
+
+            forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
+            forceText.text = force.ToString();
+        }
+    }
+
+    public void IncreaseForce()
+    {
+        force++;
+
+        forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
+        forceText.text = force.ToString();
     }
 
     //// Mass.
@@ -111,18 +143,23 @@ public class TestDroidBehaviour : MonoBehaviour
         if (mass >= 2f)
         {
             mass--;
-            m_Rigidbody.mass = mass;            
+            m_Rigidbody.mass = mass;
+
+            massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
             massText.text = mass.ToString("#.##");
         }
         else if (mass > 0.1f)
         {
             mass = mass - 0.1f;
-            m_Rigidbody.mass = mass;            
+            m_Rigidbody.mass = mass;
+
+            massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
             massText.text = mass.ToString("#.##");
         }
 
         // Density.
-        density = mass / volume;        
+        density = mass / volume;
+        volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
         densityText.text = density.ToString("#.##");
     }
 
@@ -130,11 +167,14 @@ public class TestDroidBehaviour : MonoBehaviour
     {
         // Mass.
         mass++;
-        m_Rigidbody.mass = mass;        
+        m_Rigidbody.mass = mass;
+
+        massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
         massText.text = mass.ToString();
 
         // Density.
-        density = mass / volume;        
+        density = mass / volume;
+        densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();
         densityText.text = density.ToString("#.##");
     }
 
@@ -145,7 +185,8 @@ public class TestDroidBehaviour : MonoBehaviour
             gameObject.transform.localScale.y + 0.1f,
             gameObject.transform.localScale.z + 0.1f);
 
-        volume = (float)(4.0 / 3 * Math.PI * ((gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2)));        
+        volume = (float)(4.0 / 3 * Math.PI * ((gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2)));
+        volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
         volumeText.text = volume.ToString("#.##");
 
         CalculateDensity();
@@ -159,7 +200,8 @@ public class TestDroidBehaviour : MonoBehaviour
              gameObject.transform.localScale.y - 0.1f,
              gameObject.transform.localScale.z - 0.1f);
 
-            volume = (float)(4.0 / 3 * Math.PI * ((gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2)));            
+            volume = (float)(4.0 / 3 * Math.PI * ((gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2)));
+            volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
             volumeText.text = volume.ToString("#.##");
 
             CalculateDensity();
@@ -169,7 +211,8 @@ public class TestDroidBehaviour : MonoBehaviour
     // Work out density.
     public void CalculateDensity()
     {
-        density = mass / volume;        
+        density = mass / volume;
+        densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();
         densityText.text = density.ToString("#.##");
     }
       
@@ -217,15 +260,16 @@ public class TestDroidBehaviour : MonoBehaviour
         // To calculate distance travelled.
         float distance = Vector3.Distance(lastPosition, transform.position);
         totalDistance += distance;
-        lastPosition = transform.position;        
+        lastPosition = transform.position;
+        distanceText = GameObject.Find("Distance text").GetComponent<TextMeshProUGUI>();
         distanceText.text = totalDistance.ToString("#.##");
     }
 
     IEnumerator RightTriggerPressedCoroutine()
     {
-        isRightTriggerPressed = true;
-        // m_Rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
-        m_Rigidbody.AddForce(transform.forward * speed * 10, ForceMode.Impulse);
+        isRightTriggerPressed = true;        
+        // Force is multiplied by 10 at the moment, otherwise too weak.
+        m_Rigidbody.AddForce(transform.forward * force * 10, ForceMode.Impulse);
         turnCounter++;
         turnCounterText.text = turnCounter.ToString();
         yield return new WaitForSeconds(.5f);
