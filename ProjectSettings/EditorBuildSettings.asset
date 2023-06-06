@@ -8,13 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Earth.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Start Menu.unity
     guid: 7e74dcdd7401f8b45abeed2bf15b4c28
   - enabled: 1
     path: Assets/Scenes/The Earth.unity
     guid: 6b47cb8b60baf7b40a3876414221b846
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/The Moon.unity
     guid: 424a03557488ca2449768764c36a79a9
   m_configObjects:

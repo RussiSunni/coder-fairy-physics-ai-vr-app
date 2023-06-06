@@ -7,19 +7,22 @@ using System.Collections;
 
 public class TestDroidBehaviour : MonoBehaviour 
 {
-    public GameObject goal;
-   
+    public GameObject goal;   
    
     public Rigidbody m_Rigidbody;
 
-    // Speed.
-    public int speed;
-    public TMP_Text speedText;
+    // Max speed.
+    public int maxSpeed = 10;
+    public TMP_Text maxSpeedText;
 
     // Force.
-    public int force;
+    public int force = 0;
     public TMP_Text forceText;
 
+    // Acceleration.
+    public float acceleration;
+    public TMP_Text accelerationText;
+    
     // Turns.
     public TMP_Text turnCounterText;
     private int turnCounter = 0;
@@ -64,12 +67,13 @@ public class TestDroidBehaviour : MonoBehaviour
     {
         // Get gameobjects for droid prefab.
         turnCounterText = GameObject.Find("Move counter text").GetComponent<TextMeshProUGUI>();
-        speedText = GameObject.Find("Speed text").GetComponent<TextMeshProUGUI>();
+        maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
         forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
         distanceText = GameObject.Find("Distance text").GetComponent<TextMeshProUGUI>();
         massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
         volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
         densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();
+        accelerationText = GameObject.Find("Acceleration text").GetComponent<TextMeshProUGUI>();
 
         // To calculate distance travelled.
         lastPosition = transform.position;        
@@ -93,26 +97,26 @@ public class TestDroidBehaviour : MonoBehaviour
         // Sound.
         audioSource = GetComponent<AudioSource>();
 
-        speed = 0;
+        maxSpeed = 0;
     }
 
-    // Speed.
-    public void IncreaseSpeed()
+    // Max speed.
+    public void IncreaseMaxSpeed()
     {
-        speed++;
+        maxSpeed++;
 
-        speedText = GameObject.Find("Speed text").GetComponent<TextMeshProUGUI>();
-        speedText.text = speed.ToString();
+        maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
+        maxSpeedText.text = maxSpeed.ToString();
     }
 
-    public void DecreaseSpeed()
+    public void DecreaseMaxSpeed()
     {
-        if (speed > 0)
+        if (maxSpeed > 0)
         {
-            speed--;
+            maxSpeed--;
 
-            speedText = GameObject.Find("Speed text").GetComponent<TextMeshProUGUI>();
-            speedText.text = speed.ToString();
+            maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
+            maxSpeedText.text = maxSpeed.ToString();
         }
     }
 
@@ -125,6 +129,9 @@ public class TestDroidBehaviour : MonoBehaviour
 
             forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
             forceText.text = force.ToString();
+
+            // Acceleration.
+            CalculateAcceleration();
         }
     }
 
@@ -134,6 +141,9 @@ public class TestDroidBehaviour : MonoBehaviour
 
         forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
         forceText.text = force.ToString();
+
+        // Acceleration.
+        CalculateAcceleration();
     }
 
     //// Mass.
@@ -161,6 +171,9 @@ public class TestDroidBehaviour : MonoBehaviour
         density = mass / volume;
         volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
         densityText.text = density.ToString("#.##");
+
+        // Acceleration.
+        CalculateAcceleration();
     }
 
     public void IncreaseMass()
@@ -176,6 +189,9 @@ public class TestDroidBehaviour : MonoBehaviour
         density = mass / volume;
         densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();
         densityText.text = density.ToString("#.##");
+
+        // Acceleration.
+        CalculateAcceleration();
     }
 
     // Volume.
@@ -215,7 +231,14 @@ public class TestDroidBehaviour : MonoBehaviour
         densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();
         densityText.text = density.ToString("#.##");
     }
-      
+
+    // Work out acceleration.
+    public void CalculateAcceleration()
+    {
+        acceleration = force / mass;
+        accelerationText = GameObject.Find("Acceleration text").GetComponent<TextMeshProUGUI>();
+        accelerationText.text = acceleration.ToString("#.##");
+    }
 
     void LateUpdate()
     {
@@ -269,7 +292,7 @@ public class TestDroidBehaviour : MonoBehaviour
     {
         isRightTriggerPressed = true;        
         // Force is multiplied by 10 at the moment, otherwise too weak.
-        m_Rigidbody.AddForce(transform.forward * force * 10, ForceMode.Impulse);
+        m_Rigidbody.AddForce(transform.forward * force, ForceMode.Impulse);
         turnCounter++;
         turnCounterText.text = turnCounter.ToString();
         yield return new WaitForSeconds(.5f);

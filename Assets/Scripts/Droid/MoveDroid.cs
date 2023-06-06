@@ -10,21 +10,24 @@ public class MoveDroid : MonoBehaviour
     Vector3 moveDirection;
     public Camera mainCamera;
     Rigidbody m_Rigidbody;
-    public TMP_Text speedText;
-    
+    public float speed = 0;
+
+    // Find the game object to fire methods.
+    public GameObject droid;
+
     private void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
 
         // Get gameobjects for droid prefab.
-        mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();        
-        speedText = GameObject.Find("Speed text").GetComponent<TextMeshProUGUI>();
+        mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+
+        // Find the game object to fire methods.
+        droid = GameObject.Find("Droid Ball");
     }
 
     void Update()
-    {
-        int speed = Int32.Parse(speedText.text); 
-
+    {      
         var rightHandedControllers = new List<UnityEngine.XR.InputDevice>();
         var desiredCharacteristics = UnityEngine.XR.InputDeviceCharacteristics.HeldInHand | UnityEngine.XR.InputDeviceCharacteristics.Right | UnityEngine.XR.InputDeviceCharacteristics.Controller;
         UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(desiredCharacteristics, rightHandedControllers);
@@ -37,6 +40,7 @@ public class MoveDroid : MonoBehaviour
                 m_Rigidbody.velocity = Vector3.zero;
                 m_Rigidbody.angularVelocity = Vector3.zero;              
 
+                // Get the direction from the joystick.
                 float X = primary2DAxisValue.x;
                 float Y = primary2DAxisValue.y;
 
@@ -45,6 +49,10 @@ public class MoveDroid : MonoBehaviour
 
                 moveDirection = Vector3.Normalize((X * right) + (Y * forward));
                 transform.rotation = Quaternion.LookRotation(moveDirection);
+
+                // Move.
+                if (speed <= droid.GetComponent<TestDroidBehaviour>().maxSpeed)
+                    speed += droid.GetComponent<TestDroidBehaviour>().acceleration * Time.deltaTime;
 
                 transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
             }

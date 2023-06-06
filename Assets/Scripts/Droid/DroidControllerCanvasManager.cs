@@ -44,12 +44,12 @@ public class DroidControllerCanvasManager : MonoBehaviour
     // Speed.
     public void IncreaseSpeed()
     {
-        droid.GetComponent<TestDroidBehaviour>().IncreaseSpeed();
+        droid.GetComponent<TestDroidBehaviour>().IncreaseMaxSpeed();
     }
 
     public void DecreaseSpeed()
     {
-        droid.GetComponent<TestDroidBehaviour>().DecreaseSpeed();
+        droid.GetComponent<TestDroidBehaviour>().DecreaseMaxSpeed();
     }
 
     // Force.
