@@ -10,7 +10,10 @@ public class MoveDroid : MonoBehaviour
     Vector3 moveDirection;
     public Camera mainCamera;
     Rigidbody m_Rigidbody;
+
+    // Speed.
     public float speed = 0;
+    public TMP_Text speedText;
 
     // Find the game object to fire methods.
     public GameObject droid;
@@ -22,6 +25,7 @@ public class MoveDroid : MonoBehaviour
         // Get gameobjects for droid prefab.
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
 
+        speedText = GameObject.Find("Speed text").GetComponent<TextMeshProUGUI>();
         // Find the game object to fire methods.
         droid = GameObject.Find("Droid Ball");
     }
@@ -54,7 +58,14 @@ public class MoveDroid : MonoBehaviour
                 if (speed <= droid.GetComponent<TestDroidBehaviour>().maxSpeed)
                     speed += droid.GetComponent<TestDroidBehaviour>().acceleration * Time.deltaTime;
 
+                // move inside if block above?
+                speedText.text = speed.ToString("#.##");
+
                 transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+            }
+            else
+            {
+                speed = 0;
             }
         } 
     }
