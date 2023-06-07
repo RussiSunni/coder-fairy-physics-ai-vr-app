@@ -31,7 +31,9 @@ public class MoveDroid : MonoBehaviour
     }
 
     void Update()
-    {      
+    {
+        speedText.text = speed.ToString("#.##");
+
         var rightHandedControllers = new List<UnityEngine.XR.InputDevice>();
         var desiredCharacteristics = UnityEngine.XR.InputDeviceCharacteristics.HeldInHand | UnityEngine.XR.InputDeviceCharacteristics.Right | UnityEngine.XR.InputDeviceCharacteristics.Controller;
         UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(desiredCharacteristics, rightHandedControllers);
@@ -58,14 +60,16 @@ public class MoveDroid : MonoBehaviour
                 if (speed <= droid.GetComponent<TestDroidBehaviour>().maxSpeed)
                     speed += droid.GetComponent<TestDroidBehaviour>().acceleration * Time.deltaTime;
 
-                // move inside if block above?
-                speedText.text = speed.ToString("#.##");
-
                 transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
             }
             else
             {
-                speed = 0;
+                // Deceleration.
+                if (speed > 0)
+                {
+                    speed = speed - (speed * 0.01f);
+                    transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+                }                
             }
         } 
     }
