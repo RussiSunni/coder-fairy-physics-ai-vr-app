@@ -12,7 +12,7 @@ public class MoveDroid : MonoBehaviour
     Rigidbody m_Rigidbody;
 
     // Speed.
-    public float speed = 0;
+    public float speed = 2;
     public TMP_Text speedText;
 
     // Find the game object to fire methods.

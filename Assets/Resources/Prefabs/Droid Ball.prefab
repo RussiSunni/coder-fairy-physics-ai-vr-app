@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 3364956469296236310}
   - component: {fileID: 3364956469296236311}
   - component: {fileID: 3364956469296236304}
+  - component: {fileID: 329373709006420343}
+  - component: {fileID: 9100548749139939839}
   m_Layer: 0
   m_Name: Droid Ball
   m_TagString: Player droid
@@ -97,9 +99,17 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3364956469296236296}
   m_Material: {fileID: 13400000, guid: 51ef9f370e6588646b0e92db35365803, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3364956469296236309
@@ -115,9 +125,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goal: {fileID: 0}
-  speed: 0
-  speedText: {fileID: 0}
   m_Rigidbody: {fileID: 3364956469296236310}
+  maxSpeed: 10
+  maxSpeedText: {fileID: 0}
+  force: 0
+  forceText: {fileID: 0}
+  acceleration: 0
+  accelerationText: {fileID: 0}
   turnCounterText: {fileID: 0}
   distanceText: {fileID: 0}
   massText: {fileID: 0}
@@ -134,10 +148,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3364956469296236296}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 9.1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -252,7 +277,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
+  speed: 0
   speedText: {fileID: 0}
+  droid: {fileID: 0}
+--- !u!114 &329373709006420343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3364956469296236296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54be7851940a6944a8781ac415f8b954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedCanvasGroup: {fileID: 0}
+  testPowerUp: {fileID: 0}
+--- !u!135 &9100548749139939839
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3364956469296236296}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5000001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3364956470392038927
 GameObject:
   m_ObjectHideFlags: 0
