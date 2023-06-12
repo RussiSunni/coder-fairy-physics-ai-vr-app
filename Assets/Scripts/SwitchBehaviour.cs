@@ -7,10 +7,11 @@ public class SwitchBehaviour : MonoBehaviour
     public GameObject door;
     void Start()
     {
-        
+        // Get gameobjects for prefab.
+        door = GameObject.Find("Door");
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         //Debug.Log(other.gameObject.GetComponent<Rigidbody>().mass);
         if (other.gameObject.GetComponent<Rigidbody>().mass > 10)
