@@ -14,6 +14,8 @@ public class DroidControllerCanvasManager : MonoBehaviour
     // Find the game object to fire methods.
     public GameObject droid;
 
+    public AudioSource audioSource;
+
     void Start()
     {
         canvasToggle.onValueChanged.AddListener(delegate

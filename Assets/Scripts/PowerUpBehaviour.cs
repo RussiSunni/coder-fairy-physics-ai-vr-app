@@ -5,11 +5,13 @@ using UnityEngine;
 public class PowerUpBehaviour : MonoBehaviour
 {
     public float rotationsPerMinute = 10.0f;
-    public CanvasGroup massCanvasGroup;
+    private CanvasGroup massCanvasGroup;
+    public GameObject player;
 
     void Start()
     {
         massCanvasGroup = GameObject.Find("MASS").GetComponent<CanvasGroup>();
+        player = GameObject.Find("Movement Droid Controller Canvas");
     }
     void Update()
     {
@@ -21,5 +23,7 @@ public class PowerUpBehaviour : MonoBehaviour
     {
         massCanvasGroup.alpha = 1;
         massCanvasGroup.interactable = true;
+        player.GetComponent<AudioSource>().Play();
+        gameObject.SetActive(false);
     }
 }
