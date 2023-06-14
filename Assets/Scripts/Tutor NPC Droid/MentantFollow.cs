@@ -7,12 +7,13 @@ using UnityEngine.UI;
 public class MentantFollow: MonoBehaviour
 {
     NavMeshAgent agent;
-    public GameObject target;
+    private GameObject target;
     public Toggle onOffToggle;
 
     void Start()
     {
         agent = this.GetComponent<NavMeshAgent>();
+        target = GameObject.Find("XR Rig");
     }
 
     void Follow(Vector3 location)
