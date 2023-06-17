@@ -12,11 +12,11 @@ public class TestDroidBehaviour : MonoBehaviour
     public Rigidbody m_Rigidbody;
 
     // Max speed.
-    public int maxSpeed = 10;
+    public float maxSpeed = 10;
     public TMP_Text maxSpeedText;
 
     // Force.
-    public int force = 0;
+    public float force = 0;
     public TMP_Text forceText;
 
     // Acceleration.
@@ -66,7 +66,7 @@ public class TestDroidBehaviour : MonoBehaviour
     void Start()
     {
         // Get gameobjects for droid prefab.
-        turnCounterText = GameObject.Find("Move counter text").GetComponent<TextMeshProUGUI>();
+        //turnCounterText = GameObject.Find("Move counter text").GetComponent<TextMeshProUGUI>();
         maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
         forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
         distanceText = GameObject.Find("Distance text").GetComponent<TextMeshProUGUI>();
@@ -114,9 +114,18 @@ public class TestDroidBehaviour : MonoBehaviour
         if (maxSpeed > 0)
         {
             maxSpeed--;
-
             maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
             maxSpeedText.text = maxSpeed.ToString();
+        }
+    }
+
+    public void ChangeMaxSpeed(float sliderMaxSpeed)
+    {      
+        if (sliderMaxSpeed >= 0)
+        {           
+            maxSpeed = sliderMaxSpeed;
+            maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
+            maxSpeedText.text = maxSpeed.ToString("#.##");
         }
     }
 
@@ -144,6 +153,16 @@ public class TestDroidBehaviour : MonoBehaviour
 
         // Acceleration.
         CalculateAcceleration();
+    }
+
+    public void ChangeForce(float sliderForce)
+    {
+        if (sliderForce >= 0)
+        {            
+            force = sliderForce;
+            forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
+            forceText.text = force.ToString("#.##");
+        }
     }
 
     //// Mass.

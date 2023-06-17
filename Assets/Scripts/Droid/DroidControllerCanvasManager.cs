@@ -16,6 +16,10 @@ public class DroidControllerCanvasManager : MonoBehaviour
 
     public AudioSource audioSource;
 
+    public Slider maxSpeedSlider;
+    public Slider forceSlider;
+
+
     void Start()
     {
         canvasToggle.onValueChanged.AddListener(delegate
@@ -54,6 +58,11 @@ public class DroidControllerCanvasManager : MonoBehaviour
         droid.GetComponent<TestDroidBehaviour>().DecreaseMaxSpeed();
     }
 
+    public void ChangeMaxSpeed()
+    {        
+        droid.GetComponent<TestDroidBehaviour>().ChangeMaxSpeed(maxSpeedSlider.value);
+    }
+
     // Force.
     public void IncreaseForce()
     {
@@ -63,6 +72,11 @@ public class DroidControllerCanvasManager : MonoBehaviour
     public void DecreaseForce()
     {
         droid.GetComponent<TestDroidBehaviour>().DecreaseForce();
+    }
+
+    public void ChangeForce()
+    {
+        droid.GetComponent<TestDroidBehaviour>().ChangeForce(forceSlider.value);
     }
 
     // Mass.
