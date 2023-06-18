@@ -13,7 +13,7 @@ public class MentantFollow: MonoBehaviour
     void Start()
     {
         agent = this.GetComponent<NavMeshAgent>();
-        target = GameObject.Find("XR Rig");
+        target = GameObject.Find("XR Origin");
     }
 
     void Follow(Vector3 location)
