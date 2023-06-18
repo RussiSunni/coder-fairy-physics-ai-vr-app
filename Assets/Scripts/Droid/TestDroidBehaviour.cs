@@ -24,8 +24,8 @@ public class TestDroidBehaviour : MonoBehaviour
     public TMP_Text accelerationText;
     
     // Turns.
-    public TMP_Text turnCounterText;
-    private int turnCounter = 0;
+    //public TMP_Text turnCounterText;
+    //private int turnCounter = 0;
 
     // To calculate distance travelled.
     private Vector3 lastPosition;
@@ -66,7 +66,7 @@ public class TestDroidBehaviour : MonoBehaviour
     void Start()
     {
         // Get gameobjects for droid prefab.
-        //turnCounterText = GameObject.Find("Move counter text").GetComponent<TextMeshProUGUI>();
+      //  turnCounterText = GameObject.Find("Move counter text").GetComponent<TextMeshProUGUI>();
         maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
         forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
         distanceText = GameObject.Find("Distance text").GetComponent<TextMeshProUGUI>();
@@ -309,11 +309,12 @@ public class TestDroidBehaviour : MonoBehaviour
 
     IEnumerator RightTriggerPressedCoroutine()
     {
+    //    Debug.Log("right trigger pressed");
         isRightTriggerPressed = true;        
         // Force is multiplied by 10 at the moment, otherwise too weak.
         m_Rigidbody.AddForce(transform.forward * force, ForceMode.Impulse);
-        turnCounter++;
-        turnCounterText.text = turnCounter.ToString();
+      //  turnCounter++;
+      //  turnCounterText.text = turnCounter.ToString();
         yield return new WaitForSeconds(.5f);
         isRightTriggerPressed = false;
     }
