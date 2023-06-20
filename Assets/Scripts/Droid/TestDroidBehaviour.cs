@@ -99,24 +99,6 @@ public class TestDroidBehaviour : MonoBehaviour
     }
 
     // Max speed.
-    //public void IncreaseMaxSpeed()
-    //{
-    //    maxSpeed++;
-
-    //    maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
-    //    maxSpeedText.text = maxSpeed.ToString();
-    //}
-
-    //public void DecreaseMaxSpeed()
-    //{
-    //    if (maxSpeed > 0)
-    //    {
-    //        maxSpeed--;
-    //        maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
-    //        maxSpeedText.text = maxSpeed.ToString();
-    //    }
-    //}
-
     public void ChangeMaxSpeed(float sliderMaxSpeed)
     {        
         maxSpeed = sliderMaxSpeed;
@@ -124,32 +106,7 @@ public class TestDroidBehaviour : MonoBehaviour
         maxSpeedText.text = maxSpeed.ToString("#.##");        
     }
 
-    // Force
-    //public void DecreaseForce()
-    //{
-    //    if (force > 0)
-    //    {
-    //        force--;
-
-    //        forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
-    //        forceText.text = force.ToString();
-
-    //        // Acceleration.
-    //        CalculateAcceleration();
-    //    }
-    //}
-
-    //public void IncreaseForce()
-    //{
-    //    force++;
-
-    //    forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
-    //    forceText.text = force.ToString();
-
-    //    // Acceleration.
-    //    CalculateAcceleration();
-    //}
-
+    // Force    
     public void ChangeForce(float sliderForce)
     {      
         force = sliderForce;

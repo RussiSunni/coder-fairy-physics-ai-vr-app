@@ -49,32 +49,14 @@ public class DroidControllerCanvasManager : MonoBehaviour
 
 
     // Controls are firing methods on the "TestDroidBehaviour" script, as are prefabs.
-    // Speed.
-    //public void IncreaseSpeed()
-    //{
-    //    droid.GetComponent<TestDroidBehaviour>().IncreaseMaxSpeed();
-    //}
-
-    //public void DecreaseSpeed()
-    //{
-    //    droid.GetComponent<TestDroidBehaviour>().DecreaseMaxSpeed();
-    //}
+    // Speed.    
 
     public void ChangeMaxSpeed()
     {       
         droid.GetComponent<TestDroidBehaviour>().ChangeMaxSpeed(maxSpeedSlider.value);
     }
 
-    // Force.
-    //public void IncreaseForce()
-    //{
-    //    droid.GetComponent<TestDroidBehaviour>().IncreaseForce();
-    //}
-
-    //public void DecreaseForce()
-    //{
-    //    droid.GetComponent<TestDroidBehaviour>().DecreaseForce();
-    //}
+    // Force.    
 
     public void ChangeForce()
     {
