@@ -12,7 +12,7 @@ public class TestDroidBehaviour : MonoBehaviour
     public Rigidbody m_Rigidbody;
 
     // Max speed.
-    public float maxSpeed = 10;
+    public float maxSpeed = 0;
     public TMP_Text maxSpeedText;
 
     // Force.
@@ -95,74 +95,68 @@ public class TestDroidBehaviour : MonoBehaviour
         densityText.text = density.ToString("#.##");       
 
         // Sound.
-        audioSource = GetComponent<AudioSource>();
-
-        maxSpeed = 0;
+        audioSource = GetComponent<AudioSource>();        
     }
 
     // Max speed.
-    public void IncreaseMaxSpeed()
-    {
-        maxSpeed++;
+    //public void IncreaseMaxSpeed()
+    //{
+    //    maxSpeed++;
 
-        maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
-        maxSpeedText.text = maxSpeed.ToString();
-    }
+    //    maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
+    //    maxSpeedText.text = maxSpeed.ToString();
+    //}
 
-    public void DecreaseMaxSpeed()
-    {
-        if (maxSpeed > 0)
-        {
-            maxSpeed--;
-            maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
-            maxSpeedText.text = maxSpeed.ToString();
-        }
-    }
+    //public void DecreaseMaxSpeed()
+    //{
+    //    if (maxSpeed > 0)
+    //    {
+    //        maxSpeed--;
+    //        maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
+    //        maxSpeedText.text = maxSpeed.ToString();
+    //    }
+    //}
 
     public void ChangeMaxSpeed(float sliderMaxSpeed)
-    {      
-        if (sliderMaxSpeed >= 0)
-        {           
-            maxSpeed = sliderMaxSpeed;
-            maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
-            maxSpeedText.text = maxSpeed.ToString("#.##");
-        }
+    {        
+        maxSpeed = sliderMaxSpeed;
+        maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
+        maxSpeedText.text = maxSpeed.ToString("#.##");        
     }
 
     // Force
-    public void DecreaseForce()
-    {
-        if (force > 0)
-        {
-            force--;
+    //public void DecreaseForce()
+    //{
+    //    if (force > 0)
+    //    {
+    //        force--;
 
-            forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
-            forceText.text = force.ToString();
+    //        forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
+    //        forceText.text = force.ToString();
 
-            // Acceleration.
-            CalculateAcceleration();
-        }
-    }
+    //        // Acceleration.
+    //        CalculateAcceleration();
+    //    }
+    //}
 
-    public void IncreaseForce()
-    {
-        force++;
+    //public void IncreaseForce()
+    //{
+    //    force++;
 
-        forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
-        forceText.text = force.ToString();
+    //    forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
+    //    forceText.text = force.ToString();
 
-        // Acceleration.
-        CalculateAcceleration();
-    }
+    //    // Acceleration.
+    //    CalculateAcceleration();
+    //}
 
     public void ChangeForce(float sliderForce)
-    {
-        if (sliderForce >= 0)
-        {            
-            force = sliderForce;
-            forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
-            forceText.text = force.ToString("#.##");
-        }
+    {      
+        force = sliderForce;
+        forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
+        forceText.text = force.ToString("#.##");
+
+        CalculateAcceleration();
     }
 
     //// Mass.
