@@ -37,11 +37,13 @@ public class DroidControllerCanvasManager : MonoBehaviour
         {
             droidControllerUICanvasGroup.alpha = 1;
             droidControllerUICanvasGroup.interactable = true;
+            droidControllerUICanvasGroup.blocksRaycasts = true;
         }
         else
         {
             droidControllerUICanvasGroup.alpha = 0;
             droidControllerUICanvasGroup.interactable = false;
+            droidControllerUICanvasGroup.blocksRaycasts = false;
         }
     }
 
