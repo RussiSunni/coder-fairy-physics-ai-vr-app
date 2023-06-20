@@ -22,6 +22,10 @@ public class DroidControllerCanvasManager : MonoBehaviour
 
     void Start()
     {
+        // Assign camera in script, as canvas is a prefab.
+        Camera camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        GetComponent<Canvas>().worldCamera = camera;
+
         canvasToggle.onValueChanged.AddListener(delegate
         {
             CanvasToggleValueChanged(canvasToggle);
