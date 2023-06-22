@@ -11,7 +11,7 @@ public class PowerUpBehaviour : MonoBehaviour
     void Start()
     {
         massCanvasGroup = GameObject.Find("MASS").GetComponent<CanvasGroup>();
-        player = GameObject.Find("Movement Droid Controller Canvas");
+        player = GameObject.Find("Droid Controller Canvas");
     }
     void Update()
     {
