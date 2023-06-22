@@ -12,7 +12,7 @@ public class TestDroidBehaviour : MonoBehaviour
     public Rigidbody m_Rigidbody;
 
     // Max speed.
-    public float maxSpeed = 0;
+    public float maxSpeed;
     public TMP_Text maxSpeedText;
 
     // Force.
@@ -46,7 +46,6 @@ public class TestDroidBehaviour : MonoBehaviour
     public float density = 0;    
 
     // Rotation.
-    private float rotation = 0;    
     private bool primaryButtonValue;
     private bool secondaryButtonValue;
 
@@ -60,9 +59,6 @@ public class TestDroidBehaviour : MonoBehaviour
     // Stop.
     bool gripValue;
 
-    // Rotation.
-    bool isButtonPressed = false;
-
     void Start()
     {
         // Get gameobjects for droid prefab.
@@ -74,6 +70,8 @@ public class TestDroidBehaviour : MonoBehaviour
         volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
         densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();
         accelerationText = GameObject.Find("Acceleration text").GetComponent<TextMeshProUGUI>();
+
+        maxSpeed = 0;
 
         // To calculate distance travelled.
         lastPosition = transform.position;        

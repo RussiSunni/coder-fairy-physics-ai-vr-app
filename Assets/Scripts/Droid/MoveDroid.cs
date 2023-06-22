@@ -6,7 +6,7 @@ using TMPro;
 using System;
 
 public class MoveDroid : MonoBehaviour
-{    
+{
     Vector3 moveDirection;
     public Camera mainCamera;
     Rigidbody m_Rigidbody;
@@ -39,12 +39,12 @@ public class MoveDroid : MonoBehaviour
         UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(desiredCharacteristics, rightHandedControllers);
 
         foreach (var device in rightHandedControllers)
-        {                  
+        {
             if (device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 primary2DAxisValue) && primary2DAxisValue != Vector2.zero)
             {
                 // First stop any other movement, like from a previous "shoot".
                 m_Rigidbody.velocity = Vector3.zero;
-                m_Rigidbody.angularVelocity = Vector3.zero;              
+                m_Rigidbody.angularVelocity = Vector3.zero;
 
                 // Get the direction from the joystick.
                 float X = primary2DAxisValue.x;
@@ -57,7 +57,7 @@ public class MoveDroid : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(moveDirection);
 
                 // Move.
-                if (speed <= droid.GetComponent<TestDroidBehaviour>().maxSpeed)
+                if (speed <= droid.GetComponent<TestDroidBehaviour>().maxSpeed) 
                     speed += droid.GetComponent<TestDroidBehaviour>().acceleration * Time.deltaTime;
 
                 transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
@@ -69,8 +69,9 @@ public class MoveDroid : MonoBehaviour
                 {
                     speed = speed - (speed * 0.01f);
                     transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
-                }                
+                }
             }
-        } 
+
+        }
     }
 }
