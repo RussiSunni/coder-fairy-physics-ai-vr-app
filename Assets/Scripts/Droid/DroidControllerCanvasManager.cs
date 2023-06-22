@@ -18,7 +18,7 @@ public class DroidControllerCanvasManager : MonoBehaviour
 
     public Slider maxSpeedSlider;
     public Slider forceSlider;
-
+    public Slider massSlider;
 
     void Start()
     {
@@ -32,7 +32,10 @@ public class DroidControllerCanvasManager : MonoBehaviour
         });
 
         // Find the game object to fire methods.
-        droid = GameObject.Find("Droid Ball");      
+        droid = GameObject.Find("Droid Ball");
+
+        // Set the mass slider value.
+        massSlider.value = droid.GetComponent<Rigidbody>().mass;
     }
 
     void CanvasToggleValueChanged(Toggle canvasToggle)
@@ -53,29 +56,22 @@ public class DroidControllerCanvasManager : MonoBehaviour
 
 
     // Controls are firing methods on the "TestDroidBehaviour" script, as are prefabs.
-    // Speed.    
-
+    // Speed.   
     public void ChangeMaxSpeed()
     {       
         droid.GetComponent<TestDroidBehaviour>().ChangeMaxSpeed(maxSpeedSlider.value);
     }
 
     // Force.    
-
     public void ChangeForce()
     {
         droid.GetComponent<TestDroidBehaviour>().ChangeForce(forceSlider.value);
     }
 
     // Mass.
-    public void DecreaseMass()
+    public void ChangeMass()
     {
-        droid.GetComponent<TestDroidBehaviour>().DecreaseMass();      
-    }
-
-    public void IncreaseMass()
-    {
-        droid.GetComponent<TestDroidBehaviour>().IncreaseMass();       
+        droid.GetComponent<TestDroidBehaviour>().ChangeMass(massSlider.value);
     }
 
     // Volume.

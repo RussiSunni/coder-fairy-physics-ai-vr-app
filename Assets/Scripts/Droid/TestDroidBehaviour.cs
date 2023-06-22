@@ -116,53 +116,63 @@ public class TestDroidBehaviour : MonoBehaviour
         CalculateAcceleration();
     }
 
-    //// Mass.
-    public void DecreaseMass()
-    {
-        // Mass.
-        if (mass >= 2f)
-        {
-            mass--;
-            m_Rigidbody.mass = mass;
-
-            massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
-            massText.text = mass.ToString("#.##");
-        }
-        else if (mass > 0.1f)
-        {
-            mass = mass - 0.1f;
-            m_Rigidbody.mass = mass;
-
-            massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
-            massText.text = mass.ToString("#.##");
-        }
-
-        // Density.
-        density = mass / volume;
-        volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
-        densityText.text = density.ToString("#.##");
-
-        // Acceleration.
-        CalculateAcceleration();
-    }
-
-    public void IncreaseMass()
-    {
-        // Mass.
-        mass++;
-        m_Rigidbody.mass = mass;
-
+    // Mass.
+    public void ChangeMass(float sliderMass)
+    {        
+        m_Rigidbody.mass = sliderMass;
         massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
-        massText.text = mass.ToString();
-
-        // Density.
-        density = mass / volume;
-        densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();
-        densityText.text = density.ToString("#.##");
+        massText.text = m_Rigidbody.mass.ToString("#.##");
 
         // Acceleration.
         CalculateAcceleration();
     }
+    
+    //public void DecreaseMass()
+    //{
+    //    // Mass.
+    //    if (mass >= 2f)
+    //    {
+    //        mass--;
+    //        m_Rigidbody.mass = mass;
+
+    //        massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
+    //        massText.text = mass.ToString("#.##");
+    //    }
+    //    else if (mass > 0.1f)
+    //    {
+    //        mass = mass - 0.1f;
+    //        m_Rigidbody.mass = mass;
+
+    //        massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
+    //        massText.text = mass.ToString("#.##");
+    //    }
+
+    //    // Density.
+    //    density = mass / volume;
+    //    volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
+    //    densityText.text = density.ToString("#.##");
+
+    //    // Acceleration.
+    //    CalculateAcceleration();
+    //}
+
+    //public void IncreaseMass()
+    //{
+    //    // Mass.
+    //    mass++;
+    //    m_Rigidbody.mass = mass;
+
+    //    massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
+    //    massText.text = mass.ToString();
+
+    //    // Density.
+    //    density = mass / volume;
+    //    densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();
+    //    densityText.text = density.ToString("#.##");
+
+    //    // Acceleration.
+    //    CalculateAcceleration();
+    //}
 
     // Volume.
     public void IncreaseVolume()
@@ -204,8 +214,8 @@ public class TestDroidBehaviour : MonoBehaviour
 
     // Work out acceleration.
     public void CalculateAcceleration()
-    {
-        acceleration = force / mass;
+    {      
+        acceleration = force / m_Rigidbody.mass;
         accelerationText = GameObject.Find("Acceleration text").GetComponent<TextMeshProUGUI>();
         accelerationText.text = acceleration.ToString("#.##");
     }
