@@ -249,14 +249,12 @@ public class TestDroidBehaviour : MonoBehaviour
             }
             // Rotation.
             else if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out primaryButtonValue) && primaryButtonValue)
-            {
-                if (isButtonPressed == false)
-                    StartCoroutine(ButtonPressedCoroutine("up"));              
+            {             
+                transform.RotateAround(transform.position, transform.right, -2);
             }
             else if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out secondaryButtonValue) && secondaryButtonValue)
-            {
-                if (isButtonPressed == false)
-                    StartCoroutine(ButtonPressedCoroutine("down"));
+            {               
+                transform.RotateAround(transform.position, transform.right, 2);
             }
         }
 
@@ -278,22 +276,6 @@ public class TestDroidBehaviour : MonoBehaviour
       //  turnCounterText.text = turnCounter.ToString();
         yield return new WaitForSeconds(.5f);
         isRightTriggerPressed = false;
-    }
-
-    IEnumerator ButtonPressedCoroutine(string direction)
-    {
-        isButtonPressed = true;
-
-        if (direction == "up")
-            rotation++;
-        else
-            rotation--;
-
-        transform.Rotate(rotation, 0.0f, 0, Space.Self);        
-
-        yield return new WaitForSeconds(.5f);
-
-        isButtonPressed = false;
     }
 
     // Play sound on collision.
