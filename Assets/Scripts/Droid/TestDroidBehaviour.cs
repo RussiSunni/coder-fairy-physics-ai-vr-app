@@ -218,8 +218,7 @@ public class TestDroidBehaviour : MonoBehaviour
     }
 
     IEnumerator RightTriggerPressedCoroutine()
-    {
-    //    Debug.Log("right trigger pressed");
+    {    
         isRightTriggerPressed = true;        
         // Force is multiplied by 10 at the moment, otherwise too weak.
         m_Rigidbody.AddForce(transform.forward * force, ForceMode.Impulse);
