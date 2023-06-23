@@ -123,54 +123,7 @@ public class TestDroidBehaviour : MonoBehaviour
 
         // Acceleration.
         CalculateAcceleration();
-    }
-    
-    //public void DecreaseMass()
-    //{
-    //    // Mass.
-    //    if (mass >= 2f)
-    //    {
-    //        mass--;
-    //        m_Rigidbody.mass = mass;
-
-    //        massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
-    //        massText.text = mass.ToString("#.##");
-    //    }
-    //    else if (mass > 0.1f)
-    //    {
-    //        mass = mass - 0.1f;
-    //        m_Rigidbody.mass = mass;
-
-    //        massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
-    //        massText.text = mass.ToString("#.##");
-    //    }
-
-    //    // Density.
-    //    density = mass / volume;
-    //    volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
-    //    densityText.text = density.ToString("#.##");
-
-    //    // Acceleration.
-    //    CalculateAcceleration();
-    //}
-
-    //public void IncreaseMass()
-    //{
-    //    // Mass.
-    //    mass++;
-    //    m_Rigidbody.mass = mass;
-
-    //    massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
-    //    massText.text = mass.ToString();
-
-    //    // Density.
-    //    density = mass / volume;
-    //    densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();
-    //    densityText.text = density.ToString("#.##");
-
-    //    // Acceleration.
-    //    CalculateAcceleration();
-    //}
+    }   
 
     // Volume.
     public void IncreaseVolume()
@@ -248,11 +201,11 @@ public class TestDroidBehaviour : MonoBehaviour
             // Rotation.
             else if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out primaryButtonValue) && primaryButtonValue)
             {             
-                transform.RotateAround(transform.position, transform.right, -2);
+                transform.RotateAround(transform.position, transform.right, 2);
             }
             else if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out secondaryButtonValue) && secondaryButtonValue)
             {               
-                transform.RotateAround(transform.position, transform.right, 2);
+                transform.RotateAround(transform.position, transform.right, -2);
             }
         }
 
