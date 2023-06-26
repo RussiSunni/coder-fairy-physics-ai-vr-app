@@ -1,4 +1,3 @@
-//using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ using TMPro;
 using UnityEngine.Networking;
 using System.Text;
 
-public class AskOpenAIController : MonoBehaviour
+public class TutorDroidOpenAIManager : MonoBehaviour
 {
     [SerializeField] private TTSSpeakerInput _speaker;
    // public Text questionText;

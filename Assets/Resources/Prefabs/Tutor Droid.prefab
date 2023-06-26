@@ -965,7 +965,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3782331254354788306}
   m_Layer: 0
-  m_Name: AI Mentant
+  m_Name: Tutor Droid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

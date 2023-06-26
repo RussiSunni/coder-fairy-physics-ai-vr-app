@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class MentantFollow: MonoBehaviour
+public class TutorDroidFollowBehaviour: MonoBehaviour
 {
     NavMeshAgent agent;
     private GameObject target;
