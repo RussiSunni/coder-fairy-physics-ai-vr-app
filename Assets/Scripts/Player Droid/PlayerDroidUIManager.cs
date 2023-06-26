@@ -7,14 +7,13 @@ using System;
 
 public class PlayerDroidUIManager : MonoBehaviour
 {
-    // Show / Hide UI.
-    //public Toggle canvasToggle;
+    // Show / Hide UI.    
     public CanvasGroup droidControllerUICanvasGroup;
     private bool primaryButtonValue;
     bool isLeftPrimaryButtonPressed;
 
     // Find the game object to fire methods.
-    public GameObject droid;
+    public GameObject playerDroid;
 
     public AudioSource audioSource;
 
@@ -28,63 +27,41 @@ public class PlayerDroidUIManager : MonoBehaviour
         Camera camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         GetComponent<Canvas>().worldCamera = camera;
 
-        //canvasToggle.onValueChanged.AddListener(delegate
-        //{
-        //    CanvasToggleValueChanged(canvasToggle);
-        //});
-
         // Find the game object to fire methods.
-        droid = GameObject.Find("Droid Ball");
+        playerDroid = GameObject.Find("Player Droid");
 
         // Set the mass slider value.
-        massSlider.value = droid.GetComponent<Rigidbody>().mass;
+        massSlider.value = playerDroid.GetComponent<Rigidbody>().mass;
     }
-
-    //void CanvasToggleValueChanged(Toggle canvasToggle)
-    //{
-    //    if (canvasToggle.isOn)
-    //    {
-    //        droidControllerUICanvasGroup.alpha = 1;
-    //        droidControllerUICanvasGroup.interactable = true;
-    //        droidControllerUICanvasGroup.blocksRaycasts = true;
-    //    }
-    //    else
-    //    {
-    //        droidControllerUICanvasGroup.alpha = 0;
-    //        droidControllerUICanvasGroup.interactable = false;
-    //        droidControllerUICanvasGroup.blocksRaycasts = false;
-    //    }
-    //}
-
 
     // Controls are firing methods on the "TestDroidBehaviour" script, as are prefabs.
     // Speed.   
     public void ChangeMaxSpeed()
-    {       
-        droid.GetComponent<PlayerDroidManager>().ChangeMaxSpeed(maxSpeedSlider.value);
+    {
+        playerDroid.GetComponent<PlayerDroidManager>().ChangeMaxSpeed(maxSpeedSlider.value);
     }
 
     // Force.    
     public void ChangeForce()
     {
-        droid.GetComponent<PlayerDroidManager>().ChangeForce(forceSlider.value);
+        playerDroid.GetComponent<PlayerDroidManager>().ChangeForce(forceSlider.value);
     }
 
     // Mass.
     public void ChangeMass()
     {
-        droid.GetComponent<PlayerDroidManager>().ChangeMass(massSlider.value);
+        playerDroid.GetComponent<PlayerDroidManager>().ChangeMass(massSlider.value);
     }
 
     // Volume.
     public void IncreaseVolume()
     {
-        droid.GetComponent<PlayerDroidManager>().IncreaseVolume();
+        playerDroid.GetComponent<PlayerDroidManager>().IncreaseVolume();
     }
 
     public void DecreaseVolume()
     {
-        droid.GetComponent<PlayerDroidManager>().DecreaseVolume();
+        playerDroid.GetComponent<PlayerDroidManager>().DecreaseVolume();
     }
 
 

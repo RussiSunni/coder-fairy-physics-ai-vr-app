@@ -7,8 +7,7 @@ using System.Collections;
 
 public class PlayerDroidManager : MonoBehaviour 
 {
-    public GameObject goal;   
-   
+    public GameObject goal;      
     public Rigidbody m_Rigidbody;
 
     // Max speed.
@@ -23,10 +22,6 @@ public class PlayerDroidManager : MonoBehaviour
     public float acceleration;
     public TMP_Text accelerationText;
     
-    // Turns.
-    //public TMP_Text turnCounterText;
-    //private int turnCounter = 0;
-
     // To calculate distance travelled.
     private Vector3 lastPosition;
     private float totalDistance;
@@ -61,8 +56,7 @@ public class PlayerDroidManager : MonoBehaviour
 
     void Start()
     {
-        // Get gameobjects for droid prefab.
-      //  turnCounterText = GameObject.Find("Move counter text").GetComponent<TextMeshProUGUI>();
+        // Get gameobjects for droid prefab.      
         maxSpeedText = GameObject.Find("Max speed text").GetComponent<TextMeshProUGUI>();
         forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
         distanceText = GameObject.Find("Distance text").GetComponent<TextMeshProUGUI>();
@@ -222,8 +216,7 @@ public class PlayerDroidManager : MonoBehaviour
         isRightTriggerPressed = true;        
         // Force is multiplied by 10 at the moment, otherwise too weak.
         m_Rigidbody.AddForce(transform.forward * force, ForceMode.Impulse);
-      //  turnCounter++;
-      //  turnCounterText.text = turnCounter.ToString();
+      
         yield return new WaitForSeconds(.5f);
         isRightTriggerPressed = false;
     }

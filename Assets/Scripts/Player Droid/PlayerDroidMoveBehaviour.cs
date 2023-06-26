@@ -16,7 +16,7 @@ public class PlayerDroidMoveBehaviour : MonoBehaviour
     public TMP_Text speedText;
 
     // Find the game object to fire methods.
-    public GameObject droid;
+    public GameObject playerDroid;
 
     private void Start()
     {
@@ -27,7 +27,7 @@ public class PlayerDroidMoveBehaviour : MonoBehaviour
 
         speedText = GameObject.Find("Speed text").GetComponent<TextMeshProUGUI>();
         // Find the game object to fire methods.
-        droid = GameObject.Find("Droid Ball");
+        playerDroid = GameObject.Find("Player Droid");
     }
 
     void Update()
@@ -57,8 +57,8 @@ public class PlayerDroidMoveBehaviour : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(moveDirection);
 
                 // Move.
-                if (speed <= droid.GetComponent<PlayerDroidManager>().maxSpeed) 
-                    speed += droid.GetComponent<PlayerDroidManager>().acceleration * Time.deltaTime;
+                if (speed <= playerDroid.GetComponent<PlayerDroidManager>().maxSpeed) 
+                    speed += playerDroid.GetComponent<PlayerDroidManager>().acceleration * Time.deltaTime;
 
                 transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
             }

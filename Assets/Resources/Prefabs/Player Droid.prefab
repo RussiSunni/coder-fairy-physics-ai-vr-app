@@ -99,9 +99,8 @@ GameObject:
   - component: {fileID: 7593713393213766102}
   - component: {fileID: 1016577752805553451}
   - component: {fileID: 4871163063719257188}
-  - component: {fileID: 5646734426011055938}
   m_Layer: 0
-  m_Name: Droid Ball
+  m_Name: Player Droid
   m_TagString: Player droid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,7 +213,6 @@ MonoBehaviour:
   forceText: {fileID: 0}
   acceleration: 0
   accelerationText: {fileID: 0}
-  turnCounterText: {fileID: 0}
   distanceText: {fileID: 0}
   massText: {fileID: 0}
   mass: 9.1
@@ -361,18 +359,4 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   speed: 0
   speedText: {fileID: 0}
-  droid: {fileID: 0}
---- !u!114 &5646734426011055938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4864742969129758802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54be7851940a6944a8781ac415f8b954, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speedCanvasGroup: {fileID: 0}
-  testPowerUp: {fileID: 0}
+  playerDroid: {fileID: 0}
