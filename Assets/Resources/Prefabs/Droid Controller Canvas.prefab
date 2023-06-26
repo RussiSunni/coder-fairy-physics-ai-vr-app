@@ -88,7 +88,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &1669128202893226557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10ca53a54a0c5da4da8fede59e2c65d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasToggle: {fileID: 0}
   droidControllerUICanvasGroup: {fileID: 8688882868743991031}
   droid: {fileID: 3364956469296236296, guid: ca00237f1d933f846b444f65996e9fda, type: 3}
   audioSource: {fileID: 1710497889743113847}
