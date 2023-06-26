@@ -10,11 +10,5 @@ public class TutorDroidInfoPanelManager : MonoBehaviour
     void Start()
     {
         gravityValue.text = Physics.gravity.magnitude.ToString();        
-    }
-
-
-    void Update()
-    {
-        
-    }
+    }   
 }

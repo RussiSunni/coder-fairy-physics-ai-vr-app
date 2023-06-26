@@ -77,8 +77,7 @@ public class TutorDroidOpenAIManager : MonoBehaviour
             answerText.text = responseObject.choices[0].text;
 
             // Speak Answer.
-            _speaker.SayPhrase(responseObject.choices[0].text);
-            //_speaker.SayPhrase("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+            _speaker.SayPhrase(responseObject.choices[0].text);            
         }
     }
 
