@@ -5,7 +5,7 @@ using UnityEngine.XR;
 using TMPro;
 using System;
 
-public class MoveDroid : MonoBehaviour
+public class PlayerDroidMoveBehaviour : MonoBehaviour
 {
     Vector3 moveDirection;
     public Camera mainCamera;
@@ -57,8 +57,8 @@ public class MoveDroid : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(moveDirection);
 
                 // Move.
-                if (speed <= droid.GetComponent<TestDroidBehaviour>().maxSpeed) 
-                    speed += droid.GetComponent<TestDroidBehaviour>().acceleration * Time.deltaTime;
+                if (speed <= droid.GetComponent<PlayerDroidManager>().maxSpeed) 
+                    speed += droid.GetComponent<PlayerDroidManager>().acceleration * Time.deltaTime;
 
                 transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
             }

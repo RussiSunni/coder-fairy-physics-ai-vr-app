@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-public class DroidControllerCanvasManager : MonoBehaviour
+public class PlayerDroidUIManager : MonoBehaviour
 {
     // Show / Hide UI.
     //public Toggle canvasToggle;
@@ -61,30 +61,30 @@ public class DroidControllerCanvasManager : MonoBehaviour
     // Speed.   
     public void ChangeMaxSpeed()
     {       
-        droid.GetComponent<TestDroidBehaviour>().ChangeMaxSpeed(maxSpeedSlider.value);
+        droid.GetComponent<PlayerDroidManager>().ChangeMaxSpeed(maxSpeedSlider.value);
     }
 
     // Force.    
     public void ChangeForce()
     {
-        droid.GetComponent<TestDroidBehaviour>().ChangeForce(forceSlider.value);
+        droid.GetComponent<PlayerDroidManager>().ChangeForce(forceSlider.value);
     }
 
     // Mass.
     public void ChangeMass()
     {
-        droid.GetComponent<TestDroidBehaviour>().ChangeMass(massSlider.value);
+        droid.GetComponent<PlayerDroidManager>().ChangeMass(massSlider.value);
     }
 
     // Volume.
     public void IncreaseVolume()
     {
-        droid.GetComponent<TestDroidBehaviour>().IncreaseVolume();
+        droid.GetComponent<PlayerDroidManager>().IncreaseVolume();
     }
 
     public void DecreaseVolume()
     {
-        droid.GetComponent<TestDroidBehaviour>().DecreaseVolume();
+        droid.GetComponent<PlayerDroidManager>().DecreaseVolume();
     }
 
 

@@ -5,7 +5,7 @@ using UnityEngine.XR;
 using System.Collections.Generic;
 using System.Collections;
 
-public class TestDroidBehaviour : MonoBehaviour 
+public class PlayerDroidManager : MonoBehaviour 
 {
     public GameObject goal;   
    
