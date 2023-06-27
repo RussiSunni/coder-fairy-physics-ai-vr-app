@@ -8,6 +8,7 @@ using System;
 public class PlayerDroidMoveBehaviour : MonoBehaviour
 {
     Vector3 moveDirection;
+
     public Camera mainCamera;
     Rigidbody m_Rigidbody;
 
@@ -34,44 +35,51 @@ public class PlayerDroidMoveBehaviour : MonoBehaviour
     {
         speedText.text = speed.ToString("#.##");
 
-        var rightHandedControllers = new List<UnityEngine.XR.InputDevice>();
-        var desiredCharacteristics = UnityEngine.XR.InputDeviceCharacteristics.HeldInHand | UnityEngine.XR.InputDeviceCharacteristics.Right | UnityEngine.XR.InputDeviceCharacteristics.Controller;
-        UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(desiredCharacteristics, rightHandedControllers);
-
-        foreach (var device in rightHandedControllers)
+        // If player droid is on the ground.
+        if (playerDroid.GetComponent<PlayerDroidManager>().isGrounded())
         {
-            if (device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 primary2DAxisValue) && primary2DAxisValue != Vector2.zero)
+            var rightHandedControllers = new List<UnityEngine.XR.InputDevice>();
+            var desiredCharacteristics = UnityEngine.XR.InputDeviceCharacteristics.HeldInHand | UnityEngine.XR.InputDeviceCharacteristics.Right | UnityEngine.XR.InputDeviceCharacteristics.Controller;
+            UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(desiredCharacteristics, rightHandedControllers);
+
+            foreach (var device in rightHandedControllers)
             {
-                // First stop any other movement, like from a previous "shoot".
-                m_Rigidbody.velocity = Vector3.zero;
-                m_Rigidbody.angularVelocity = Vector3.zero;
-
-                // Get the direction from the joystick.
-                float X = primary2DAxisValue.x;
-                float Y = primary2DAxisValue.y;
-
-                Vector3 forward = Vector3.Normalize(Vector3.ProjectOnPlane(mainCamera.transform.forward, Vector3.up));
-                Vector3 right = Vector3.Normalize(Vector3.ProjectOnPlane(mainCamera.transform.right, Vector3.up));
-
-                moveDirection = Vector3.Normalize((X * right) + (Y * forward));
-                transform.rotation = Quaternion.LookRotation(moveDirection);
-
-                // Move.
-                if (speed <= playerDroid.GetComponent<PlayerDroidManager>().maxSpeed) 
-                    speed += playerDroid.GetComponent<PlayerDroidManager>().acceleration * Time.deltaTime;
-
-                transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
-            }
-            else
-            {
-                // Deceleration.
-                if (speed > 0)
+                // Detect thumbstick movement.
+                if (device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 primary2DAxisValue) && primary2DAxisValue != Vector2.zero)
                 {
-                    speed = speed - (speed * 0.01f);
+                    // First stop any other movement, like from a previous "shoot".
+                    m_Rigidbody.velocity = Vector3.zero;
+                    m_Rigidbody.angularVelocity = Vector3.zero;
+
+                    // Get the direction from the joystick.
+                    float X = primary2DAxisValue.x;
+                    float Y = primary2DAxisValue.y;
+
+                    // So that we orient to the headset's direction.
+                    Vector3 forward = Vector3.Normalize(Vector3.ProjectOnPlane(mainCamera.transform.forward, Vector3.up));
+                    Vector3 right = Vector3.Normalize(Vector3.ProjectOnPlane(mainCamera.transform.right, Vector3.up));
+
+                    moveDirection = Vector3.Normalize((X * right) + (Y * forward));
+                    transform.rotation = Quaternion.LookRotation(moveDirection);
+
+
+                    // Move.
+                    if (speed <= playerDroid.GetComponent<PlayerDroidManager>().maxSpeed)
+                        speed += playerDroid.GetComponent<PlayerDroidManager>().acceleration * Time.deltaTime;
+
                     transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+
+                }
+                else
+                {
+                    // Deceleration.
+                    if (speed > 0)
+                    {
+                        speed = speed - (speed * 0.01f);
+                        transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+                    }
                 }
             }
-
         }
     }
 }
