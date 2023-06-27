@@ -7,13 +7,13 @@ public class PowerUpBehaviour : MonoBehaviour
     public float rotationsPerMinute = 10.0f;
     private CanvasGroup massCanvasGroup;
     private CanvasGroup gravityCanvasGroup;
-    public GameObject player;
+    public GameObject playerDroid;
 
     void Start()
     {
         massCanvasGroup = GameObject.Find("MASS").GetComponent<CanvasGroup>();
         gravityCanvasGroup = GameObject.Find("GRAVITY").GetComponent<CanvasGroup>();
-        player = GameObject.Find("Droid Controller Canvas");
+        playerDroid = GameObject.Find("Player Droid UI");
     }
     void Update()
     {
@@ -25,8 +25,8 @@ public class PowerUpBehaviour : MonoBehaviour
     {
         massCanvasGroup.alpha = 1;
         massCanvasGroup.interactable = true;
-        gravityCanvasGroup.alpha = 1;        
-        player.GetComponent<AudioSource>().Play();
+        gravityCanvasGroup.alpha = 1;
+        playerDroid.GetComponent<AudioSource>().Play();
         gameObject.SetActive(false);
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingPlatform : MonoBehaviour
+public class MovingPlatformBehaviour : MonoBehaviour
 {
     [SerializeField]
     private Transform position1, position2;
