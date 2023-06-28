@@ -20,6 +20,7 @@ public class PlayerDroidUIManager : MonoBehaviour
     public Slider maxSpeedSlider;
     public Slider forceSlider;
     public Slider massSlider;
+    public Slider volumeSlider;
 
     void Start()
     {
@@ -52,18 +53,11 @@ public class PlayerDroidUIManager : MonoBehaviour
     {
         playerDroid.GetComponent<PlayerDroidManager>().ChangeMass(massSlider.value);
     }
-
     // Volume.
-    public void IncreaseVolume()
+    public void ChangeVolume()
     {
-        playerDroid.GetComponent<PlayerDroidManager>().IncreaseVolume();
-    }
-
-    public void DecreaseVolume()
-    {
-        playerDroid.GetComponent<PlayerDroidManager>().DecreaseVolume();
-    }
-
+        playerDroid.GetComponent<PlayerDroidManager>().ChangeVolume(volumeSlider.value);
+    } 
 
     void LateUpdate()
     {
