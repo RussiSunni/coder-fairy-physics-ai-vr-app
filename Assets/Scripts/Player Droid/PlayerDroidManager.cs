@@ -128,28 +128,30 @@ public class PlayerDroidManager : MonoBehaviour
 
         // Acceleration.
         CalculateAcceleration();
+        // Density.
+        CalculateDensity();
     }
 
     // Volume.
-    public void ChangeVolume(float sliderVolume)
-    {
-        Debug.Log(sliderVolume);
+    //public void ChangeVolume(float sliderVolume)
+    //{
+    //    Debug.Log(sliderVolume);
 
-        gameObject.transform.localScale = new Vector3(sliderVolume,
-           sliderVolume,
-           sliderVolume);
+    //    gameObject.transform.localScale = new Vector3(sliderVolume,
+    //       sliderVolume,
+    //       sliderVolume);
 
-        volume = (float)(4.0 / 3 * Math.PI * ((gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2)));
-        volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
-        volumeText.text = volume.ToString("#.##");
+    //    volume = (float)(4.0 / 3 * Math.PI * ((gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2) * (gameObject.transform.localScale.x / 2)));
+    //    volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
+    //    volumeText.text = volume.ToString("#.##");
 
-        CalculateDensity();
-    }
+    //    CalculateDensity();
+    //}
 
     // Work out density.
     public void CalculateDensity()
     {
-        density = mass / volume;
+        density = m_Rigidbody.mass / volume;
         densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();
         densityText.text = density.ToString("#.##");
     }

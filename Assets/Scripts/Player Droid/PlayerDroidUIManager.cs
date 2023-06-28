@@ -54,10 +54,10 @@ public class PlayerDroidUIManager : MonoBehaviour
         playerDroid.GetComponent<PlayerDroidManager>().ChangeMass(massSlider.value);
     }
     // Volume.
-    public void ChangeVolume()
-    {
-        playerDroid.GetComponent<PlayerDroidManager>().ChangeVolume(volumeSlider.value);
-    } 
+    //public void ChangeVolume()
+    //{
+    //    playerDroid.GetComponent<PlayerDroidManager>().ChangeVolume(volumeSlider.value);
+    //} 
 
     void LateUpdate()
     {
