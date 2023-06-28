@@ -64,7 +64,7 @@ public class PlayerDroidManager : MonoBehaviour
         forceText = GameObject.Find("Force text").GetComponent<TextMeshProUGUI>();
         distanceText = GameObject.Find("Distance text").GetComponent<TextMeshProUGUI>();
         massText = GameObject.Find("Mass text").GetComponent<TextMeshProUGUI>();
-        volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
+       // volumeText = GameObject.Find("Volume text").GetComponent<TextMeshProUGUI>();
         densityText = GameObject.Find("Density text").GetComponent<TextMeshProUGUI>();
         accelerationText = GameObject.Find("Acceleration text").GetComponent<TextMeshProUGUI>();
 
@@ -79,7 +79,7 @@ public class PlayerDroidManager : MonoBehaviour
         sphereCollider = GetComponent<SphereCollider>();
         // Work out volume.
         volume = (float)(4.0 / 3 * Math.PI * sphereCollider.radius * sphereCollider.radius * sphereCollider.radius);
-        volumeText.text = volume.ToString("#.##");
+     //   volumeText.text = volume.ToString("#.##");
 
         // To calculate mass.
         mass = m_Rigidbody.mass;
