@@ -39,6 +39,10 @@ public class PlayerDroidManager : MonoBehaviour
     // Density.
     public TMP_Text densityText;
     public float density = 0;
+    // -- Interaction with water.
+    public float depthBeforeSubmerged = 0.5f;
+    public float displacementAmount = 2f;
+    public bool isFloatingOnWater;
 
     // Rotation.
     private bool primaryButtonValue;
@@ -233,5 +237,34 @@ public class PlayerDroidManager : MonoBehaviour
         }
         if (collision.relativeVelocity.magnitude > 2)
             audioSource.Play();
+    }
+
+    // Interaction with liquid.
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "water")
+        {
+            m_Rigidbody.drag = 1;
+            CalculateDensity();          
+            if (density < 1)
+            {               
+                if (transform.position.y < 0f)
+                {
+                    float displacementMultiplier = Mathf.Clamp01(-transform.position.y / depthBeforeSubmerged) * displacementAmount;
+                    m_Rigidbody.AddForce(new Vector3(0f, Mathf.Abs(Physics.gravity.y) * displacementMultiplier), ForceMode.Acceleration);
+                }
+                isFloatingOnWater = true;               
+            }
+            else
+                isFloatingOnWater = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "water")
+        {
+            isFloatingOnWater = false;
+        }
     }
 }

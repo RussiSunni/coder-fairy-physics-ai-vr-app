@@ -33,10 +33,11 @@ public class PlayerDroidMoveBehaviour : MonoBehaviour
 
     void Update()
     {
-        speedText.text = speed.ToString("#.##");
+        speedText.text = speed.ToString("#.##");     
 
         // If player droid is on the ground.
-        if (playerDroid.GetComponent<PlayerDroidManager>().isGrounded())
+        if (playerDroid.GetComponent<PlayerDroidManager>().isGrounded()
+            || playerDroid.GetComponent<PlayerDroidManager>().isFloatingOnWater)
         {
             var rightHandedControllers = new List<UnityEngine.XR.InputDevice>();
             var desiredCharacteristics = UnityEngine.XR.InputDeviceCharacteristics.HeldInHand | UnityEngine.XR.InputDeviceCharacteristics.Right | UnityEngine.XR.InputDeviceCharacteristics.Controller;
