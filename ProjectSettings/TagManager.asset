@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Player droid
+  - water
   layers:
   - Default
   - TransparentFX
