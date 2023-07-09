@@ -20,8 +20,6 @@ public class MassPowerUpBehaviour : MonoBehaviour
         massCanvasGroup.alpha = 1;
         massCanvasGroup.interactable = true;
         densityCanvasGroup.alpha = 1;
-        gravityCanvasGroup.alpha = 1;
-        playerDroid.GetComponent<AudioSource>().Play();
-        gameObject.SetActive(false);
+        gravityCanvasGroup.alpha = 1;     
     }
 }

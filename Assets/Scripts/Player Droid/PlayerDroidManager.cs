@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Collections;
 
 public class PlayerDroidManager : MonoBehaviour
-{
-    public GameObject goal;
+{   
     public Rigidbody m_Rigidbody;
 
     // Max speed.

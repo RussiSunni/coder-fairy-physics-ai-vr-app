@@ -17,8 +17,6 @@ public class VolumePowerUpBehaviour : MonoBehaviour
     {
         volumeCanvasGroup.alpha = 1;
         volumeCanvasGroup.interactable = true;
-        densityCanvasGroup.alpha = 1;
-        playerDroid.GetComponent<AudioSource>().Play();
-        gameObject.SetActive(false);
+        densityCanvasGroup.alpha = 1;      
     }
 }
