@@ -99,7 +99,6 @@ GameObject:
   - component: {fileID: 7593713393213766102}
   - component: {fileID: 1016577752805553451}
   - component: {fileID: 4871163063719257188}
-  - component: {fileID: 1216167122557864068}
   m_Layer: 0
   m_Name: Player Droid
   m_TagString: Player droid
@@ -221,9 +220,10 @@ MonoBehaviour:
   volume: 12.770042
   densityText: {fileID: 0}
   density: 0.71260536
-  audioSource: {fileID: 1016577752805553451}
   depthBeforeSubmerged: 1
   displacementAmount: 3
+  isFloatingOnWater: 0
+  audioSource: {fileID: 1016577752805553451}
 --- !u!54 &7593713393213766102
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -232,7 +232,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4864742969129758802}
   serializedVersion: 4
-  m_Mass: 9.1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -363,18 +363,3 @@ MonoBehaviour:
   speed: 0
   speedText: {fileID: 0}
   playerDroid: {fileID: 0}
---- !u!114 &1216167122557864068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4864742969129758802}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 159c6e6bc602be5439801d081f71ba71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidBody: {fileID: 7593713393213766102}
-  depthBeforeSubmerged: 1
-  displacementAmount: 3
